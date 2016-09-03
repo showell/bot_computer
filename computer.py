@@ -83,7 +83,7 @@ BOTS = make_builtin_bots(BuiltinBot)
 
 def run():
     human = Human()
-    message = '[ADD 8 [MULT 10 6]]'
+    message = '[ADD [MULT 3 2] [MULT 10 6]]'
     send_message(None, human, message)
 
 if __name__ == '__main__':
