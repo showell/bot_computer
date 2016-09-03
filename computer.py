@@ -25,7 +25,7 @@ class Calculation:
     def compute(self):
         return send_calculation(self.token)
 
-class Bot:
+class BuiltinBot:
     def __init__(self, name, compute_via_python):
         self.name = name
         self.compute_via_python = compute_via_python
@@ -41,11 +41,22 @@ class Bot:
         computed_args = [a.compute() for a in calculation.args]
         return self.compute_via_python(computed_args)
 
+def multiply(args):
+    product = 1
+    for arg in args:
+        product = int(arg) * product
+    return product
+
 BOTS = {
-    'ADD': Bot(
+    'ADD': BuiltinBot(
         name='ADD',
         compute_via_python = lambda args:
             sum(int(x) for x in args)
+    ),
+    'MULT': BuiltinBot(
+        name='MULT',
+        compute_via_python = lambda args:
+            multiply(args)
     ),
 }
 
@@ -64,13 +75,13 @@ def send_message(agent, message):
 def send_calculation(token):
     # generalize
     message = str(token)
-    print message
-    return send_message(BOTS['ADD'], message)
+    action = str(token.tokens[0])
+    bot = BOTS[action]
+    return send_message(bot, message)
 
 def run():
     human = Human()
-    message = '[ADD 9 1]'
-    message = '[ADD 8 [ADD 2 1]]'
+    message = '[ADD 8 [MULT 10 6]]'
     send_message(human, message)
 
 if __name__ == '__main__':
