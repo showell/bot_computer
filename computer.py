@@ -1,6 +1,6 @@
 from parser import parse
 
-def make_args(token):
+def make_arg(token):
     if token.kind == 'literal':
         return Literal(token)
     else:
@@ -20,7 +20,7 @@ class Calculation:
         action = tokens.pop(0)
         assert action.kind == 'literal'
         self.action = str(action)
-        self.args = [make_args(t) for t in tokens]
+        self.args = [make_arg(t) for t in tokens]
 
     def compute(self):
         return send_calculation(self.token)
