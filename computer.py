@@ -10,8 +10,8 @@ class Literal:
     def __init__(self, token):
         self.s = str(token)
 
-    def compute(self):
-        return self.s
+    def compute(self, callback):
+        callback(self.s)
 
 class Calculation:
     def __init__(self, token):
@@ -22,15 +22,31 @@ class Calculation:
         self.action = str(action)
         self.args = [make_arg(t) for t in tokens]
 
-    def compute(self):
-        return send_calculation(self.token)
+    def compute(self, callback):
+        send_calculation(callback, self.token)
+
+    def compute_args(self, callback):
+        computed_args = []
+
+        def on_computed_arg(computed_arg):
+            computed_args.append(computed_arg)
+            compute_one()
+
+        def compute_one():
+            if len(computed_args) == len(self.args):
+                callback(computed_args)
+            else:
+                arg = self.args[len(computed_args)]
+                arg.compute(on_computed_arg)
+
+        compute_one()
 
 class BuiltinBot:
     def __init__(self, name, compute_via_python):
         self.name = name
         self.compute_via_python = compute_via_python
 
-    def receive(self, message):
+    def receive(self, callback, message):
         token = parse(message)
         assert token.kind == 'expression'
         calculation = Calculation(token)
@@ -38,8 +54,9 @@ class BuiltinBot:
             print str(token)
             print calculation.action
             raise Exception('Wrong bot dispatched.')
-        computed_args = [a.compute() for a in calculation.args]
-        return self.compute_via_python(computed_args)
+        def on_callback(computed_args):
+            callback(self.compute_via_python(computed_args))
+        calculation.compute_args(on_callback)
 
 def multiply(args):
     product = 1
@@ -61,28 +78,29 @@ BOTS = {
 }
 
 class Human:
-    def receive(self, message):
+    def receive(self, callback, message):
         # For now we will do our own computations
         token = parse(message)
         assert token.kind == 'expression'
         calculation = Calculation(token)
-        answer = send_calculation(token)
-        print '%s -> %s' % (message, answer)
+        def on_callback(answer):
+            print '%s -> %s' % (message, answer)
+        send_calculation(on_callback, token)
 
-def send_message(agent, message):
-    return agent.receive(message)
+def send_message(callback, agent, message):
+    agent.receive(callback, message)
 
-def send_calculation(token):
+def send_calculation(callback, token):
     # generalize
     message = str(token)
     action = str(token.tokens[0])
     bot = BOTS[action]
-    return send_message(bot, message)
+    send_message(callback, bot, message)
 
 def run():
     human = Human()
     message = '[ADD 8 [MULT 10 6]]'
-    send_message(human, message)
+    send_message(None, human, message)
 
 if __name__ == '__main__':
     run()
