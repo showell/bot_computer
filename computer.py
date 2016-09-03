@@ -1,4 +1,5 @@
 from parser import parse
+from builtin import make_builtin_bots
 
 def make_arg(token):
     if token.kind == 'literal':
@@ -58,25 +59,6 @@ class BuiltinBot:
             callback(self.compute_via_python(computed_args))
         calculation.compute_args(on_callback)
 
-def multiply(args):
-    product = 1
-    for arg in args:
-        product = int(arg) * product
-    return product
-
-BOTS = {
-    'ADD': BuiltinBot(
-        name='ADD',
-        compute_via_python = lambda args:
-            sum(int(x) for x in args)
-    ),
-    'MULT': BuiltinBot(
-        name='MULT',
-        compute_via_python = lambda args:
-            multiply(args)
-    ),
-}
-
 class Human:
     def receive(self, callback, message):
         # For now we will do our own computations
@@ -96,6 +78,8 @@ def send_calculation(callback, token):
     action = str(token.tokens[0])
     bot = BOTS[action]
     send_message(callback, bot, message)
+
+BOTS = make_builtin_bots(BuiltinBot)
 
 def run():
     human = Human()
