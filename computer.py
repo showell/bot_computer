@@ -1,6 +1,3 @@
-class Method:
-    pass
-
 def tokenize(s):
     res = []
     i = 0
