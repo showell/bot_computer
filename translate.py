@@ -6,4 +6,3 @@ def translate(template_source, template_target, args):
     return s
 
 
-print(translate("DIAG x y", "SQRT [ADD [SQUARE x] [SQUARE y]]", args=["4", "5"]))
