@@ -53,10 +53,10 @@ class TranslateBot:
 
     def compute(self, callback, computed_args):
         args = [str(ca) for ca in computed_args]
-        new_message = '[' + translate(
+        new_message = '(' + translate(
             template_source=self.template_source,
             template_target=self.template_target,
-            args=args) + ']'
+            args=args) + ')'
         token = parse(new_message)
         assert token.kind == 'expression'
         calculation = Calculation(token, send_calculation)
@@ -80,13 +80,13 @@ BOTS['SQUARE'] = TranslateBot(
 )
 BOTS['FACTORIAL'] = TranslateBot(
     template_source='FACTORIAL x',
-    template_target='IF [EQ x 0] 1 [MULT x [FACTORIAL [ADD x -1]]]'
+    template_target='IF (EQ x 0) 1 (MULT x (FACTORIAL (ADD x -1)))'
 )
 BOTS['IF'] = IfBot()
 
 def run():
     human = Human()
-    message = '[FACTORIAL 5]'
+    message = '(FACTORIAL 5)'
     send_message(None, human, message)
 
 if __name__ == '__main__':

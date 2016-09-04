@@ -3,7 +3,7 @@ def tokenize(s):
     i = 0
     t = ''
     for i, c in enumerate(s):
-        if c in '[] ':
+        if c in '() ':
             if t:
                 res.append(t)
             if c != ' ':
@@ -29,7 +29,7 @@ class ExpressionToken:
         self.kind = 'expression'
 
     def __str__(self):
-        return '[' + ' '.join(str(t) for t in self.tokens) + ']'
+        return '(' + ' '.join(str(t) for t in self.tokens) + ')'
 
 def parse(s):
     tokens = tokenize(s)
@@ -40,7 +40,7 @@ def parse(s):
         while True:
             if not tokens:
                 raise Exception('unclosed bracket')
-            if tokens[0] == ']':
+            if tokens[0] == ')':
                 return ExpressionToken(res), tokens[1:]
             else:
                 head, rest = _parse(tokens)
@@ -51,7 +51,7 @@ def parse(s):
     def _parse(tokens):
         if not tokens:
             return None, None
-        if tokens[0] == '[':
+        if tokens[0] == '(':
             return _parse_bracket_expr(tokens)
         else:
             return LiteralToken(tokens[0]), tokens[1:]
