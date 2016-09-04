@@ -17,10 +17,10 @@ def make_arg(token, send_calculation):
 
 class Literal:
     def __init__(self, token):
-        self.s = str(token)
+        self.val = int(token.val)
 
     def compute(self, callback):
-        callback(self.s)
+        callback(self.val)
 
 class Calculation:
     def __init__(self, token, send_calculation):

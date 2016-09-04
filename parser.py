@@ -16,12 +16,12 @@ def tokenize(s):
     return res
 
 class LiteralToken:
-    def __init__(self, s):
-        self.s = s
+    def __init__(self, val):
+        self.val = val
         self.kind = 'literal'
 
     def __str__(self):
-        return self.s
+        return self.val
 
 class ExpressionToken:
     def __init__(self, tokens):

@@ -6,13 +6,13 @@ implement their full behavior.
 def do_add(args):
     sum = 0
     for arg in args:
-        sum = int(arg) + sum
+        sum = arg + sum
     return sum
 
 def do_multiply(args):
     product = 1
     for arg in args:
-        product = int(arg) * product
+        product = arg * product
     return product
 
 def do_eq(args):
