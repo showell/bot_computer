@@ -1,46 +1,6 @@
 from parser import parse
 from builtin import make_builtin_bots
-
-def make_arg(token):
-    if token.kind == 'literal':
-        return Literal(token)
-    else:
-        return Calculation(token)
-
-class Literal:
-    def __init__(self, token):
-        self.s = str(token)
-
-    def compute(self, callback):
-        callback(self.s)
-
-class Calculation:
-    def __init__(self, token):
-        self.token = token
-        tokens = token.tokens[:]
-        action = tokens.pop(0)
-        assert action.kind == 'literal'
-        self.action = str(action)
-        self.args = [make_arg(t) for t in tokens]
-
-    def compute(self, callback):
-        send_calculation(callback, self.token)
-
-    def compute_args(self, callback):
-        computed_args = []
-
-        def on_computed_arg(computed_arg):
-            computed_args.append(computed_arg)
-            compute_one()
-
-        def compute_one():
-            if len(computed_args) == len(self.args):
-                callback(computed_args)
-            else:
-                arg = self.args[len(computed_args)]
-                arg.compute(on_computed_arg)
-
-        compute_one()
+from calculate import Calculation
 
 class BuiltinBot:
     def __init__(self, name, compute_via_python):
@@ -50,7 +10,7 @@ class BuiltinBot:
     def receive(self, callback, message):
         token = parse(message)
         assert token.kind == 'expression'
-        calculation = Calculation(token)
+        calculation = Calculation(token, send_calculation)
         if calculation.action != self.name:
             print str(token)
             print calculation.action
@@ -64,7 +24,7 @@ class Human:
         # For now we will do our own computations
         token = parse(message)
         assert token.kind == 'expression'
-        calculation = Calculation(token)
+        calculation = Calculation(token, send_calculation)
         def on_callback(answer):
             print '%s -> %s' % (message, answer)
         send_calculation(on_callback, token)
