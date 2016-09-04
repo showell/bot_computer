@@ -1,6 +1,6 @@
 from parser import parse
 from builtin import make_builtin_bots
-from calculate import Calculation
+from calculate import Calculation, make_arg
 from translate import translate
 
 class BuiltinBot:
@@ -29,6 +29,17 @@ class Human:
             print '%s -> %s' % (message, answer)
         send_calculation(on_callback, token)
 
+class IfBot:
+    def receive(self, callback, message):
+        token = parse(message)
+        calculation = Calculation(token.tokens[1], send_calculation)
+        def on_callback(answer):
+            if answer:
+                make_arg(token.tokens[2], send_calculation).compute(callback)
+            else:
+                make_arg(token.tokens[3], send_calculation).compute(callback)
+        calculation.compute(on_callback)
+
 class TranslateBot:
     def __init__(self, template_source, template_target):
         self.template_source = template_source
@@ -41,6 +52,7 @@ class TranslateBot:
             template_source=self.template_source,
             template_target=self.template_target,
             args=args) + ']'
+        print 'new_message', new_message
         token = parse(new_message)
         assert token.kind == 'expression'
         calculation = Calculation(token, send_calculation)
@@ -62,11 +74,15 @@ BOTS['SQUARE'] = TranslateBot(
     template_source='SQUARE x',
     template_target='MULT x x'
 )
-
+BOTS['FACTORIAL'] = TranslateBot(
+    template_source='FACTORIAL x',
+    template_target='IF [EQ x 0] 1 [MULT x [FACTORIAL [ADD x -1]]]'
+)
+BOTS['IF'] = IfBot()
 
 def run():
     human = Human()
-    message = '[ADD [IF 0 5 3] [MULT 10 7]]'
+    message = '[FACTORIAL 5]'
     send_message(None, human, message)
 
 if __name__ == '__main__':

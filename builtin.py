@@ -3,35 +3,45 @@ This file configures the built-in bots, but it doesn't
 implement their full behavior.
 '''
 
-def multiply(args):
+def do_add(args):
+    sum = 0
+    for arg in args:
+        sum = int(arg) + sum
+    return sum
+
+def do_multiply(args):
     product = 1
     for arg in args:
         product = int(arg) * product
     return product
 
-def do_if(args):
-    cond = True
-    if args[0] in ['0', 'false', '""']:
-        cond = False
-    if cond:
-        return args[1]
+CNT = 1
+def do_eq(args):
+    global CNT
+    CNT += 1
+    print args
+    print 'args', args
+    if CNT == 8:
+        print 'exiting'
+        import sys; sys.exit()
+    if str(args[0]) == str(args[1]):
+        return 1
     else:
-        return args[2]
+        return 0
 
 def make_builtin_bots(bot_builder):
     return {
         'ADD': bot_builder(
             name='ADD',
-            compute_via_python = lambda args:
-                sum(int(x) for x in args)
+            compute_via_python = do_add
         ),
         'MULT': bot_builder(
             name='MULT',
-            compute_via_python = multiply
+            compute_via_python=do_multiply
         ),
-        'IF': bot_builder(
-            name='IF',
-            compute_via_python = do_if
+        'EQ': bot_builder(
+            name='EQ',
+            compute_via_python=do_eq
         ),
     }
 
