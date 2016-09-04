@@ -66,7 +66,7 @@ BOTS['SQUARE'] = TranslateBot(
 
 def run():
     human = Human()
-    message = '[ADD [SQUARE [ADD 2 1]] [MULT 10 7]]'
+    message = '[ADD [IF 0 5 3] [MULT 10 7]]'
     send_message(None, human, message)
 
 if __name__ == '__main__':
