@@ -47,12 +47,16 @@ class TranslateBot:
 
     def receive(self, callback, message):
         token = parse(message)
-        args = [str(t) for t in token.tokens[1:]]
+        calculation = Calculation(token, send_calculation)
+        calculation.compute_args(
+            lambda args: self.compute(callback, args))
+
+    def compute(self, callback, computed_args):
+        args = [str(ca) for ca in computed_args]
         new_message = '[' + translate(
             template_source=self.template_source,
             template_target=self.template_target,
             args=args) + ']'
-        print 'new_message', new_message
         token = parse(new_message)
         assert token.kind == 'expression'
         calculation = Calculation(token, send_calculation)

@@ -15,15 +15,7 @@ def do_multiply(args):
         product = int(arg) * product
     return product
 
-CNT = 1
 def do_eq(args):
-    global CNT
-    CNT += 1
-    print args
-    print 'args', args
-    if CNT == 8:
-        print 'exiting'
-        import sys; sys.exit()
     if str(args[0]) == str(args[1]):
         return 1
     else:
