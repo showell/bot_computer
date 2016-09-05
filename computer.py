@@ -91,6 +91,7 @@ def run():
         '(DOUBLE 13)',
         '(TD "some value")',
         '(RANGE 5 15)',
+        '(APPLY "DOUBLE" 5)',
     ]
     for message in messages:
         send_message(None, human, message)
