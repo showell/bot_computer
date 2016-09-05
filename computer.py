@@ -88,6 +88,8 @@ def run():
     human = Human()
     message = '(FACTORIAL 5)'
     send_message(None, human, message)
+    message = '(ADD [1, 2] [3, 4])'
+    send_message(None, human, message)
 
 if __name__ == '__main__':
     run()

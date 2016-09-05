@@ -4,15 +4,17 @@ implement their full behavior.
 '''
 
 def do_add(args):
-    sum = 0
-    for arg in args:
-        sum = arg + sum
+    assert len(args) >= 1
+    sum = args[0]
+    for arg in args[1:]:
+        sum += arg
     return sum
 
 def do_multiply(args):
-    product = 1
-    for arg in args:
-        product = arg * product
+    assert len(args) >= 1
+    product = args[0]
+    for arg in args[1:]:
+        product *= arg
     return product
 
 def do_eq(args):
