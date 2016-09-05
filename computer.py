@@ -94,6 +94,12 @@ def run():
         '(APPLY "ADD" (ADD 4 5) 10)',
         '(APPLY "ADD" (ADD "x" "y") "z")',
         '(DEREF 2 ["apple", "banana", "carrot", "dog"])',
+        '(MAP_ONE 0 [1, 2] "DOUBLE")',
+        '(LEN [0, 1, 2, 3, 4])',
+        '(LIST 5 7 9)',
+        '(MAP_REST 0 [1, 2, 3] "DOUBLE")',
+        '(MAP [1, 2, 3] "SQUARE")',
+        # '(SPLAT "ADD" [1, 2, 3])',
     ]
     for message in messages:
         send_message(None, human, message)

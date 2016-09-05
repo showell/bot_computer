@@ -22,6 +22,12 @@ def do_eq(args):
     else:
         return 0
 
+def do_len(args):
+    return len(args[0])
+
+def do_list(args):
+    return args
+
 def do_multiply(args):
     assert len(args) >= 1
     product = args[0]
@@ -42,6 +48,14 @@ def make_builtin_bots(bot_builder):
         'EQ': bot_builder(
             name='EQ',
             compute_via_python=do_eq
+        ),
+        'LEN': bot_builder(
+            name='LEN',
+            compute_via_python=do_len,
+        ),
+        'LIST': bot_builder(
+            name='LIST',
+            compute_via_python=do_list,
         ),
         'MULT': bot_builder(
             name='MULT',

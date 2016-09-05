@@ -5,6 +5,9 @@ def scan_token(s):
             break
         else:
             i += 1
+    if i == 0:
+        print 'scan_token', s
+        raise Exception('could not find token')
     return s[:i]
 
 def scan_string(s):
@@ -19,16 +22,25 @@ def scan_string(s):
             i += 1
     raise Exception('never found end of string')
 
+def ws(s):
+    i = 0
+    while i < len(s) and s[i] in ' \n':
+        i += 1
+    return i
+
 def scan_list(s):
     assert s[0] == '['
+    if s[1] == ']':
+        return s[:2]
     i = 1
+    i += len(scan(s[i:]))
     while True:
-        token = scan(s[i:])
-        i += len(token)
         if s[i] == ']':
             return s[:i+1]
-        assert s[i:i+2] == ', '
-        i += 2
+        assert s[i] == ','
+        i += 1
+        i += ws(s[i:])
+        i += len(scan(s[i:]))
 
 def scan(s):
     if len(s) == 0:
