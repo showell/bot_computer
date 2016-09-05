@@ -27,9 +27,7 @@ class Human:
         token = parse(message)
         assert token.kind == 'expression'
         calculation = Calculation(token, send_calculation)
-        def on_callback(answer):
-            print '%s -> %s' % (message, repr(answer))
-        send_calculation(on_callback, token)
+        send_calculation(callback, token)
 
 class IfBot:
     def receive(self, callback, message):
@@ -80,7 +78,6 @@ def reset_event_loop():
 
 def send_message(callback, agent, message):
     global CNT
-    CNT += 1
     def send(cnt):
         def my_callback(answer):
             REQUESTS[cnt] = message
@@ -88,6 +85,7 @@ def send_message(callback, agent, message):
             REPLIES.append((cnt, answer))
         MESSAGES.append((agent, my_callback, message))
     send(CNT)
+    CNT += 1
 
 def event_loop():
     while MESSAGES or REPLIES:
@@ -142,7 +140,11 @@ def run():
         if VERBOSE:
             print "\n\n--"
         reset_event_loop()
-        send_message(None, human, message)
+
+        def callback(answer):
+            print '%s -> %s' % (message, repr(answer))
+
+        send_message(callback, human, message)
         event_loop()
 
 if __name__ == '__main__':
