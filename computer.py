@@ -28,7 +28,7 @@ class Human:
         assert token.kind == 'expression'
         calculation = Calculation(token, send_calculation)
         def on_callback(answer):
-            print '%s -> %s' % (message, answer)
+            print '%s -> %s' % (message, repr(answer))
         send_calculation(on_callback, token)
 
 class IfBot:
