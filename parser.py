@@ -1,18 +1,44 @@
+from json_scan import scan
+
+def scan_token(s):
+    i = 0
+    while i < len(s):
+        if s[i] in ' )':
+            break
+        else:
+            i += 1
+    return s[:i]
+
+def len_ws(s):
+    i = 0
+    while i < len(s):
+        if s[i] == ' ':
+            i += 1
+        else:
+            break
+    return i
+
 def tokenize(s):
     res = []
     i = 0
     t = ''
-    for i, c in enumerate(s):
-        if c in '() ':
-            if t:
-                res.append(t)
-            if c != ' ':
-                res.append(c)
-            t = ''
+    i = 0
+    while i < len(s):
+        i += len_ws(s[i:])
+        c = s[i]
+        if c == '(':
+            res.append(c)
+            i += 1
+            new_token = scan_token(s[i:])
+            res.append(new_token)
+            i += len(new_token)
+        elif c == ')':
+            res.append(c)
+            i += 1
         else:
-            t += c
-    if t:
-        res.append(t)
+            token = scan(s[i:])
+            res.append(token)
+            i += len(token)
     return res
 
 class LiteralToken:
@@ -61,3 +87,5 @@ def parse(s):
     assert rest == []
     return lst
 
+if __name__ == '__main__':
+    print tokenize('(ADD)')

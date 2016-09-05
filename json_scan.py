@@ -1,18 +1,18 @@
 def scan_token(s):
     i = 0
     while i < len(s):
-        if s[i] in '  ]},':
+        if s[i] in '  ]}),':
             break
         else:
             i += 1
-    return s[:i], s[i:]
+    return s[:i]
 
 def scan_string(s):
     assert s[0] == '"'
     i = 1
     while i < len(s):
         if s[i] == '"':
-            return s[:i+1], s[i+1:]
+            return s[:i+1]
         elif s[0] == '\\':
             i += 2
         else:
@@ -23,12 +23,10 @@ def scan_list(s):
     assert s[0] == '['
     i = 1
     while True:
-        token, rest = scan(s[i:])
+        token = scan(s[i:])
         i += len(token)
-        print token
         if s[i] == ']':
-            return s[:i+1], s[i+1:]
-        print s[i:i+2]
+            return s[:i+1]
         assert s[i:i+2] == ', '
         i += 2
 
