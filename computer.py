@@ -86,10 +86,13 @@ BOTS['IF'] = IfBot()
 
 def run():
     human = Human()
-    message = '(FACTORIAL 5)'
-    send_message(None, human, message)
-    message = '(ADD [1, 2] [3, 4])'
-    send_message(None, human, message)
+    messages = [
+        '(FACTORIAL 5)',
+        '(ADD [1, 2] [3, 4])',
+        '(SQUARE 7)',
+    ]
+    for message in messages:
+        send_message(None, human, message)
 
 if __name__ == '__main__':
     run()
