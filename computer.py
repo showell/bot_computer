@@ -88,6 +88,7 @@ def run():
         '(FACTORIAL 5)',
         '(ADD [1, 2] [3, 4])',
         '(SQUARE 7)',
+        '(DOUBLE 13)',
         '(TD "some value")',
         '(RANGE 5 15)',
     ]
