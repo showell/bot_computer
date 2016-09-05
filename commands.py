@@ -26,6 +26,9 @@ COMMANDS = [
     ('TD val',
         'TAG "td" val'),
 
+    ('TR val',
+        'TAG "tr" val'),
+
     ('RANGE x y',
         '''
         IF
@@ -67,9 +70,15 @@ COMMANDS = [
 
     ('MATH_TR n',
         '''
-        MAP
-            (MATH_ROW n)
-            "TD"
+        TR
+            (SPLAT
+                "ADD"
+                (
+                    MAP
+                        (MATH_ROW n)
+                        "TD"
+                )
+            )
         '''),
 ]
 

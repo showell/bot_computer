@@ -64,8 +64,43 @@ class TranslateBot:
         calculation = Calculation(token, send_calculation)
         send_calculation(callback, token)
 
+VERBOSE = False
+CNT = 0
+CALLBACKS = {}
+REQUESTS = {}
+MESSAGES = []
+REPLIES = []
+
+def reset_event_loop():
+    global CNT
+    CNT = 0
+    assert REQUESTS == {}
+    assert MESSAGES == []
+    assert REPLIES == []
+
 def send_message(callback, agent, message):
-    agent.receive(callback, message)
+    global CNT
+    CNT += 1
+    def send(cnt):
+        def my_callback(answer):
+            REQUESTS[cnt] = message
+            CALLBACKS[cnt] = callback
+            REPLIES.append((cnt, answer))
+        MESSAGES.append((agent, my_callback, message))
+    send(CNT)
+
+def event_loop():
+    while MESSAGES or REPLIES:
+        while REPLIES:
+            cnt, answer = REPLIES.pop(0)
+            CALLBACKS[cnt](answer)
+            if VERBOSE:
+                print '  %4d: %s -> %s' % (cnt, REQUESTS[cnt], json.dumps(answer))
+            del CALLBACKS[cnt]
+            del REQUESTS[cnt]
+        while MESSAGES:
+            agent, my_callback, message = MESSAGES.pop(0)
+            agent.receive(my_callback, message)
 
 def send_calculation(callback, token):
     # generalize
@@ -101,9 +136,14 @@ def run():
         '(MAP [1, 2, 3] "SQUARE")',
         '(SPLAT "ADD" [1, 2, 3])',
         '(MATH_ROW 7)',
+        '(MATH_TR 7)',
     ]
     for message in messages:
+        if VERBOSE:
+            print "\n\n--"
+        reset_event_loop()
         send_message(None, human, message)
+        event_loop()
 
 if __name__ == '__main__':
     run()
