@@ -99,7 +99,7 @@ def run():
         '(LIST 5 7 9)',
         '(MAP_REST 0 [1, 2, 3] "DOUBLE")',
         '(MAP [1, 2, 3] "SQUARE")',
-        # '(SPLAT "ADD" [1, 2, 3])',
+        '(SPLAT "ADD" [1, 2, 3])',
     ]
     for message in messages:
         send_message(None, human, message)
