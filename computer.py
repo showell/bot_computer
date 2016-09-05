@@ -89,7 +89,7 @@ def run():
         '(ADD [1, 2] [3, 4])',
         '(SQUARE 7)',
         '(DOUBLE 13)',
-        '(TD "some value")',
+        '(TAG "td" "some value")',
         '(RANGE 5 15)',
         '(APPLY "ADD" (ADD 4 5) 10)',
         '(APPLY "ADD" (ADD "x" "y") "z")',
@@ -100,6 +100,7 @@ def run():
         '(MAP_REST 0 [1, 2, 3] "DOUBLE")',
         '(MAP [1, 2, 3] "SQUARE")',
         '(SPLAT "ADD" [1, 2, 3])',
+        '(MATH_ROW 7)',
     ]
     for message in messages:
         send_message(None, human, message)
