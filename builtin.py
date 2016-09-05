@@ -1,6 +1,9 @@
 '''
-This file configures the built-in bots, but it doesn't
+This file configures the simpler built-in bots, but it doesn't
 implement their full behavior.
+
+Simple built-in bots don't have introspection capability, and
+they only now how to manipulate JSON; they don't call other bots.
 '''
 
 def do_add(args):
