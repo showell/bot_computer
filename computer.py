@@ -2,6 +2,7 @@ from parser import parse
 from builtin import make_builtin_bots
 from calculate import Calculation, make_arg
 from translate import translate
+from commands import COMMANDS
 import json
 
 class BuiltinBot:
@@ -75,26 +76,10 @@ def send_calculation(callback, token):
 
 BOTS = make_builtin_bots(BuiltinBot)
 
-BOTS['SQUARE'] = TranslateBot(
-    template_source='SQUARE x',
-    template_target='MULT x x'
-)
-BOTS['IS_ZERO'] = TranslateBot(
-    template_source='IS_ZERO x',
-    template_target='EQ x 0',
-)
-BOTS['DECR'] = TranslateBot(
-    template_source='DECR x',
-    template_target='ADD x -1',
-)
-BOTS['TD'] = TranslateBot(
-    template_source='TD value',
-    template_target='ADD "<td>" value "</td>"',
-)
-BOTS['FACTORIAL'] = TranslateBot(
-    template_source='FACTORIAL x',
-    template_target='IF (IS_ZERO x) 1 (MULT x (FACTORIAL (DECR x)))'
-)
+for source, target in COMMANDS:
+    name = source.split()[0]
+    BOTS[name] = TranslateBot(template_source=source, template_target=target)
+
 BOTS['IF'] = IfBot()
 
 def run():
@@ -104,6 +89,7 @@ def run():
         '(ADD [1, 2] [3, 4])',
         '(SQUARE 7)',
         '(TD "some value")',
+        '(RANGE 5 15)',
     ]
     for message in messages:
         send_message(None, human, message)

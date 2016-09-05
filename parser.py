@@ -3,7 +3,7 @@ from json_scan import scan
 def scan_token(s):
     i = 0
     while i < len(s):
-        if s[i] in ' )':
+        if s[i] in ' \n)':
             break
         else:
             i += 1
@@ -12,7 +12,7 @@ def scan_token(s):
 def len_ws(s):
     i = 0
     while i < len(s):
-        if s[i] == ' ':
+        if s[i] in ' \n':
             i += 1
         else:
             break
@@ -29,6 +29,7 @@ def tokenize(s):
         if c == '(':
             res.append(c)
             i += 1
+            i += len_ws(s[i:])
             new_token = scan_token(s[i:])
             res.append(new_token)
             i += len(new_token)
