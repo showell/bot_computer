@@ -7,6 +7,8 @@ def translate(template_source, template_target, args):
         arg = args[i]
         s = s.replace(':' + param, str(json.loads(arg)))
         s = s.replace(param, arg)
+    splat_args = args[len(source_params):]
+    s = s.replace('...', ' '.join(splat_args))
     return s
 
 
