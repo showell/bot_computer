@@ -23,6 +23,9 @@ COMMANDS = [
     ('TAG tag val',
         'ADD "<" tag ">" (STR val) "</" tag ">"'),
 
+    ('TABLE val',
+        'ADD "<table border=1>" val "</table>"'),
+
     ('TD val',
         'TAG "td" val'),
 
@@ -63,6 +66,7 @@ COMMANDS = [
     ('MATH_ROW n',
         '''
         LIST
+            (STR n)
             (DOUBLE n)
             (SQUARE n)
             (FACTORIAL n)
@@ -79,6 +83,19 @@ COMMANDS = [
                         "TD"
                 )
             )
+        '''),
+    ('MATH_TABLE n',
+        '''
+        TABLE (
+            ADD
+            (TR (MAP ["i", "2*i", "i**2", "i!"] "TD"))
+            (SPLAT "ADD" (
+                MAP
+                    (RANGE 0 n)
+                    "MATH_TR"
+                )
+            )
+        )
         '''),
 ]
 

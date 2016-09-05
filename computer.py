@@ -135,6 +135,7 @@ def run():
         '(SPLAT "ADD" [1, 2, 3])',
         '(MATH_ROW 7)',
         '(MATH_TR 7)',
+        '(MATH_TABLE 7)',
     ]
     for message in messages:
         if VERBOSE:
