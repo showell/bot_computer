@@ -13,6 +13,7 @@ def run():
         '["RANGE", [null, 5], ["ADD", [null, 5], [null, 10]]]',
         '["LIST", [null, 5], [null, 7], ["ADD", [null, 8], [null, 1]]]',
         '["LEN", [null, [0,1,2,3,4]]]',
+        '["DEREF", [null, 2], [null, ["apple", "banana", "carrot", "dog"]]]',
     ]
 
     ignore = [
