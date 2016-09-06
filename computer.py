@@ -11,6 +11,7 @@ def run():
         '["DOUBLE", ["DOUBLE", [null, 5]]]',
         '["TAG", [null, "td"], [null, "hello world"]]',
         '["RANGE", [null, 5], ["ADD", [null, 5], [null, 10]]]',
+        '["LIST", [null, 5], [null, 7], ["ADD", [null, 8], [null, 1]]]',
     ]
 
     ignore = [
