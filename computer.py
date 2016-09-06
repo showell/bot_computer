@@ -19,7 +19,6 @@ def run():
     ignore = [
         '(APPLY "ADD" (ADD 4 5) 10)',
         '(APPLY "ADD" (ADD "x" "y") "z")',
-        '(DEREF 2 ["apple", "banana", "carrot", "dog"])',
         '(FACTORIAL 5)',
         '(MAP_SLICE 1 [1, 2, 3] "DOUBLE")',
         '(MAP [1, 2, 3] "SQUARE")',
