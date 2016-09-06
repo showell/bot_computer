@@ -5,6 +5,20 @@ COMMANDS = [
     ('SQUARE x',
         '["MULT", [null, x], [null, x]]'),
 
+    ('TAG tag val',
+        '''
+        [
+            "ADD",
+            [null, "<"],
+            [null, tag],
+            [null, ">"],
+            ["STR", [null, val]],
+            [null, "</"],
+            [null, tag],
+            [null, ">"]
+        ]
+        '''),
+
     ('APPLY f',
         ':f ...'),
 
@@ -19,9 +33,6 @@ COMMANDS = [
 
     ('DECR x',
         'ADD x -1'),
-
-    ('TAG tag val',
-        'ADD "<" tag ">" (STR val) "</" tag ">"'),
 
     ('TABLE val',
         'ADD "<table border=1>" val "</table>"'),

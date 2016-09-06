@@ -8,10 +8,11 @@ def run():
         '["ADD", [null, [1, 2]], [null, [3, 4]]]',
         '["DOUBLE", [null, 13]]',
         '["SQUARE", ["ADD", [null, 3], [null, 4]]]',
+        '["DOUBLE", ["DOUBLE", [null, 5]]]',
+        '["TAG", [null, "td"], [null, "hello world"]]',
     ]
 
     ignore = [
-        '(TAG "td" "some value")',
         '(RANGE 5 15)',
         '(APPLY "ADD" (ADD 4 5) 10)',
         '(APPLY "ADD" (ADD "x" "y") "z")',

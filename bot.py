@@ -63,6 +63,7 @@ class TranslateBot:
             template_source=self.template_source,
             template_target=self.template_target,
             args=args)
+        print new_message
         token = parse(new_message)
         assert token.kind == 'expression'
         send_calculation(callback, token.action, new_message)
