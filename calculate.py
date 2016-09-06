@@ -28,10 +28,8 @@ class Calculation:
     def __init__(self, token, send_calculation):
         self.token = token
         tokens = token.tokens[:]
-        action = tokens.pop(0)
-        assert action.kind == 'literal'
-        self.action = str(action)
-        self.args = [make_arg(t, send_calculation) for t in tokens]
+        self.action = token.action
+        self.args = [make_arg(t, send_calculation) for t in tokens[1:]]
         self.send_calculation = send_calculation
 
     def compute(self, callback):
