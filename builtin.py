@@ -42,38 +42,16 @@ def do_str(args):
     return str(args[0])
 
 def make_builtin_bots(bot_builder):
-    return {
-        'ADD': bot_builder(
-            name='ADD',
-            compute_via_python = do_add
-        ),
-        'DEREF': bot_builder(
-            name='DEREF',
-            compute_via_python=do_deref
-        ),
-        'EQ': bot_builder(
-            name='EQ',
-            compute_via_python=do_eq
-        ),
-        'LEN': bot_builder(
-            name='LEN',
-            compute_via_python=do_len,
-        ),
-        'LIST': bot_builder(
-            name='LIST',
-            compute_via_python=do_list,
-        ),
-        'MULT': bot_builder(
-            name='MULT',
-            compute_via_python=do_multiply
-        ),
-        'RANGE': bot_builder(
-            name='RANGE',
-            compute_via_python=do_range
-        ),
-        'STR': bot_builder(
-            name='STR',
-            compute_via_python=do_str
-        ),
-    }
+    tups = [
+        ('ADD', do_add),
+        ('DEREF', do_deref),
+        ('EQ', do_eq),
+        ('LEN', do_len),
+        ('LIST', do_list),
+        ('MULT', do_multiply),
+        ('RANGE', do_range),
+        ('STR', do_str),
+    ]
 
+    return {name: bot_builder(name=name, compute_via_python=do_it) for
+        name, do_it in tups}
