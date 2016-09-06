@@ -8,7 +8,7 @@ class VirtualMachine:
         self.replies = []
         self.verbose = verbose
 
-    def _dispatch_message_to_bot(self, seq, bot, message, callback):
+    def _dispatch_request_to_bot(self, seq, bot, message, callback):
         '''
         We need a bot to do work for us, and we have a sequence
         number and a message, plus some callback that we need
@@ -42,7 +42,7 @@ class VirtualMachine:
                 del self.requests[seq]
             while self.messages:
                 seq, bot, message, callback = self.messages.pop(0)
-                self._dispatch_message_to_bot(seq, bot, message, callback)
+                self._dispatch_request_to_bot(seq, bot, message, callback)
 
     def send_calculation(self, callback, token):
         # generalize
