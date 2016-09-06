@@ -18,11 +18,10 @@ class VirtualMachine:
         directly to us; instead they push replies on to a queue
         that we process in an event loop.
         '''
-        human = self.bots['Human']
         if self.verbose:
             print "\n\n--"
 
-        self.send_message(callback, human, message)
+        self.send_calculation(callback, 'Dispatch', message)
         self.event_loop()
 
     def _dispatch_request_to_bot(self, seq, bot, message, callback):
@@ -57,10 +56,6 @@ class VirtualMachine:
         del self.callbacks[seq]
         del self.requests[seq]
 
-    def send_message(self, callback, bot, message):
-        self.messages.append((self.seq, bot, message, callback))
-        self.seq += 1
-
     def event_loop(self):
         while self.messages or self.replies:
             while self.replies:
@@ -73,5 +68,7 @@ class VirtualMachine:
 
     def send_calculation(self, callback, action, message):
         bot = self.bots[action]
-        self.send_message(callback, bot, message)
+        self.messages.append((self.seq, bot, message, callback))
+        self.seq += 1
+
 

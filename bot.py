@@ -22,7 +22,14 @@ class BuiltinBot:
             callback(self.compute_via_python(computed_args))
         calculation.compute_args(on_callback)
 
-class Human:
+class DispatchBot:
+    '''
+    The dispatch bot really does nothing but call back into the
+    VM.  It's questionable really it clarifies anything to have
+    this as kind of the "root" of the calculation.  This could be
+    more like the "human" who is asking all the other bots to do
+    work for it.
+    '''
     def receive(self, send_calculation, callback, message):
         token = parse(message)
         assert token.kind == 'expression'
@@ -69,5 +76,5 @@ for source, target in COMMANDS:
 
 BOTS['IF'] = IfBot()
 
-BOTS['Human'] = Human()
+BOTS['Dispatch'] = DispatchBot()
 
