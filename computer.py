@@ -12,6 +12,7 @@ def run():
         '["TAG", [null, "td"], [null, "hello world"]]',
         '["RANGE", [null, 5], ["ADD", [null, 5], [null, 10]]]',
         '["LIST", [null, 5], [null, 7], ["ADD", [null, 8], [null, 1]]]',
+        '["LEN", [null, [0,1,2,3,4]]]',
     ]
 
     ignore = [
@@ -19,8 +20,6 @@ def run():
         '(APPLY "ADD" (ADD "x" "y") "z")',
         '(DEREF 2 ["apple", "banana", "carrot", "dog"])',
         '(FACTORIAL 5)',
-        '(LEN [0, 1, 2, 3, 4])',
-        '(LIST 5 7 9)',
         '(MAP_SLICE 1 [1, 2, 3] "DOUBLE")',
         '(MAP [1, 2, 3] "SQUARE")',
         '(SPLAT "ADD" [1, 2, 3])',
