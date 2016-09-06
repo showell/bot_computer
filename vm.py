@@ -67,7 +67,10 @@ class VirtualMachine:
                 self._dispatch_request_to_bot(seq, bot, message, callback)
 
     def send_calculation(self, callback, action, message):
-        bot = self.bots[action]
+        try:
+            bot = self.bots[action]
+        except:
+            raise Exception('Unknown action %s in %s' % (action, message))
         self.messages.append((self.seq, bot, message, callback))
         self.seq += 1
 

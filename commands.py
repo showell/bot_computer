@@ -53,6 +53,36 @@ COMMANDS = [
         ]
         '''),
 
+    ('CONCAT_SLICE index lst',
+        '''
+        [
+            "IF",
+            ["EQ", [null, index], ["LEN", [null, lst]]],
+            [null, ""],
+            [
+                "ADD",
+                ["DEREF", [null, index], [null, lst]],
+                [
+                    "CONCAT_SLICE",
+                    ["INCR", [null, index]],
+                    [null, lst]
+                ]
+            ]
+        ]
+        '''),
+
+    ('CONCAT lst',
+        '["CONCAT_SLICE", [null, 0], [null, lst]]'),
+
+    ('TR elems',
+        '''
+        [
+            "TAG",
+            [null, "tr"],
+            ["CONCAT", [null, elems]]
+        ]
+        '''),
+
     ('TD val',
         '["TAG", [null, "td"], [null, val]]'),
 
@@ -66,13 +96,6 @@ COMMANDS = [
 
     ('TABLE val',
         'ADD "<table border=1>" val "</table>"'),
-
-    ('TR lst',
-        '''
-        ADD
-            (TAG "tr" (SPLAT "ADD" lst))
-            "\\n"
-        '''),
 
     ('MAP_SLICE start lst f',
         '''

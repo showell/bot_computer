@@ -37,7 +37,6 @@ class DispatchBot:
 
 class IfBot:
     def receive(self, send_calculation, callback, message):
-        print message
         token = parse(message)
         calculation = make_arg(token.args[0], send_calculation)
         def on_callback(answer):
@@ -64,7 +63,6 @@ class TranslateBot:
             template_source=self.template_source,
             template_target=self.template_target,
             args=args)
-        print new_message
         token = parse(new_message)
         assert token.kind == 'expression'
         send_calculation(callback, token.action, new_message)

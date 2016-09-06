@@ -31,6 +31,8 @@ def run():
         '["FACTORIAL", [null, 5]]',
         '["MATH_ROW", [null, 7]]',
         '["TD", [null, "hello"]]',
+        '["CONCAT", [null, ["a", "b", "c"]]]',
+        '["TR", ["LIST", ["TD", [null, "a"]], [null, "<td>b</td>"]]]',
     ]
 
     ignore = [

@@ -23,7 +23,10 @@ def make_arg(val):
         return LiteralToken(val)
 
 def parse(s):
-    val = json.loads(s)
+    try:
+        val = json.loads(s)
+    except:
+        raise Exception('illegal json: %s' % s)
     return ExpressionToken(val)
 
 if __name__ == '__main__':
