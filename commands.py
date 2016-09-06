@@ -36,14 +36,6 @@ COMMANDS = [
             "\\n"
         '''),
 
-    ('RANGE x y',
-        '''
-        IF
-            (EQ x y)
-            []
-            (ADD
-                [x]
-                (RANGE (INCR x) y))'''),
     ('FACTORIAL x',
         '''
         IF

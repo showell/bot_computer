@@ -35,6 +35,9 @@ def do_multiply(args):
         product *= arg
     return product
 
+def do_range(args):
+    return range(args[0], args[1])
+
 def do_str(args):
     return str(args[0])
 
@@ -63,6 +66,10 @@ def make_builtin_bots(bot_builder):
         'MULT': bot_builder(
             name='MULT',
             compute_via_python=do_multiply
+        ),
+        'RANGE': bot_builder(
+            name='RANGE',
+            compute_via_python=do_range
         ),
         'STR': bot_builder(
             name='STR',
