@@ -29,6 +29,8 @@ def run():
         ]
         ''',
         '["FACTORIAL", [null, 5]]',
+        '["MATH_ROW", [null, 7]]',
+        '["TD", [null, "hello"]]',
     ]
 
     ignore = [
@@ -38,7 +40,6 @@ def run():
         '(MAP_SLICE 1 [1, 2, 3] "DOUBLE")',
         '(MAP [1, 2, 3] "SQUARE")',
         '(SPLAT "ADD" [1, 2, 3])',
-        '(MATH_ROW 7)',
         '(MATH_TR 7)',
         '(MATH_TABLE 7)',
     ]

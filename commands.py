@@ -42,6 +42,22 @@ COMMANDS = [
         ]
         '''),
 
+    ('MATH_ROW val',
+        '''
+        [
+            "LIST",
+            ["STR", [null, val]],
+            ["DOUBLE", [null, val]],
+            ["SQUARE", [null, val]],
+            ["FACTORIAL", [null, val]]
+        ]
+        '''),
+
+    ('TD val',
+        '["TAG", [null, "td"], [null, val]]'),
+
+    ###
+
     ('APPLY f',
         ':f ...'),
 
@@ -50,9 +66,6 @@ COMMANDS = [
 
     ('TABLE val',
         'ADD "<table border=1>" val "</table>"'),
-
-    ('TD val',
-        'TAG "td" val'),
 
     ('TR lst',
         '''
@@ -73,15 +86,6 @@ COMMANDS = [
     ('MAP lst f',
         'MAP_SLICE 0 lst f'),
 
-
-    ('MATH_ROW n',
-        '''
-        LIST
-            (STR n)
-            (DOUBLE n)
-            (SQUARE n)
-            (FACTORIAL n)
-        '''),
 
     ('MATH_TR n',
         '''
