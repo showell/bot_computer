@@ -29,8 +29,12 @@ COMMANDS = [
     ('TD val',
         'TAG "td" val'),
 
-    ('TR',
-        'TAG "tr" (SPLAT "ADD" ...)'),
+    ('TR lst',
+        '''
+        ADD
+            (TAG "tr" (SPLAT "ADD" lst))
+            "\\n"
+        '''),
 
     ('RANGE x y',
         '''
@@ -74,15 +78,11 @@ COMMANDS = [
 
     ('MATH_TR n',
         '''
-        TR
-            (SPLAT
-                "ADD"
-                (
-                    MAP
-                        (MATH_ROW n)
-                        "TD"
-                )
-            )
+        TR (
+            MAP
+                (MATH_ROW n)
+                "TD"
+        )
         '''),
     ('MATH_TABLE n',
         '''

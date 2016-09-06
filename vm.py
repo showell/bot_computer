@@ -8,7 +8,7 @@ class VirtualMachine:
         self.replies = []
         self.verbose = verbose
 
-    def process_message(self, message):
+    def process_message(self, callback, message):
         '''
         Send a message to the "root" bot and then start our
         event loop to handle replies from various bots.
@@ -21,9 +21,6 @@ class VirtualMachine:
         human = self.bots['Human']
         if self.verbose:
             print "\n\n--"
-
-        def callback(answer):
-            print '%s -> %s' % (message, repr(answer))
 
         self.send_message(callback, human, message)
         self.event_loop()

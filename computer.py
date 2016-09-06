@@ -25,7 +25,11 @@ def run():
     ]
     for message in messages:
         vm = VirtualMachine(BOTS)
-        vm.process_message(message)
+
+        def callback(answer):
+            print '%s -> %s' % (message, str(answer))
+
+        vm.process_message(callback, message)
 
 
 if __name__ == '__main__':
