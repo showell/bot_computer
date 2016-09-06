@@ -27,7 +27,7 @@ class Human:
         token = parse(message)
         assert token.kind == 'expression'
         calculation = Calculation(token, send_calculation)
-        send_calculation(callback, token)
+        send_calculation(callback, token.action, message)
 
 class IfBot:
     def receive(self, send_calculation, callback, message):
@@ -59,8 +59,7 @@ class TranslateBot:
             args=args) + ')'
         token = parse(new_message)
         assert token.kind == 'expression'
-        calculation = Calculation(token, send_calculation)
-        send_calculation(callback, token)
+        send_calculation(callback, token.action, new_message)
 
 BOTS = make_builtin_bots(BuiltinBot)
 

@@ -71,9 +71,7 @@ class VirtualMachine:
                 seq, bot, message, callback = self.messages.pop(0)
                 self._dispatch_request_to_bot(seq, bot, message, callback)
 
-    def send_calculation(self, callback, token):
-        message = str(token)
-        action = str(token.tokens[0])
+    def send_calculation(self, callback, action, message):
         bot = self.bots[action]
         self.send_message(callback, bot, message)
 

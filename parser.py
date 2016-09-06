@@ -54,6 +54,7 @@ class ExpressionToken:
     def __init__(self, tokens):
         self.tokens = tokens
         self.kind = 'expression'
+        self.action = str(tokens[0])
 
     def __str__(self):
         return '(' + ' '.join(str(t) for t in self.tokens) + ')'

@@ -35,7 +35,10 @@ class Calculation:
         self.send_calculation = send_calculation
 
     def compute(self, callback):
-        self.send_calculation(callback, self.token)
+        token = self.token
+        message = str(token)
+        action = str(token.tokens[0])
+        self.send_calculation(callback, action, message)
 
     def compute_args(self, callback):
         computed_args = []
