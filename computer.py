@@ -28,6 +28,7 @@ def run():
             [null, "else-case"]
         ]
         ''',
+        '["FACTORIAL", [null, 5]]',
     ]
 
     ignore = [

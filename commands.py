@@ -28,6 +28,20 @@ COMMANDS = [
     ('DECR x',
         '["ADD", [null, x], [null, -1]]'),
 
+    ('FACTORIAL x',
+        '''
+        [
+            "IF",
+            ["IS_ZERO", [null, x]],
+            [null, 1],
+            [
+                "MULT",
+                [null, x],
+                ["FACTORIAL", ["DECR", [null, x]]]
+            ]
+        ]
+        '''),
+
     ('APPLY f',
         ':f ...'),
 
@@ -46,13 +60,6 @@ COMMANDS = [
             (TAG "tr" (SPLAT "ADD" lst))
             "\\n"
         '''),
-
-    ('FACTORIAL x',
-        '''
-        IF
-            (IS_ZERO x)
-            1
-            (MULT x (FACTORIAL (DECR x)))'''),
 
     ('MAP_SLICE start lst f',
         '''
