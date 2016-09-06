@@ -1,4 +1,4 @@
-from bot import BOTS, Human
+from bot import BOTS
 import json
 
 
@@ -46,7 +46,7 @@ class VirtualMachine:
         self.send_message(callback, bot, message)
 
 def run():
-    human = Human()
+    human = BOTS['Human']
     messages = [
         '(FACTORIAL 5)',
         '(ADD [1, 2] [3, 4])',
