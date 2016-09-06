@@ -3,40 +3,39 @@ import json
 
 
 VERBOSE = False
-CNT = 0
-CALLBACKS = {}
-REQUESTS = {}
-MESSAGES = []
-REPLIES = []
 
 class VirtualMachine:
-    def reset_event_loop(self):
+    def __init__(self):
         self.cnt = 0
-        assert REQUESTS == {}
-        assert MESSAGES == []
-        assert REPLIES == []
+        self.requests = {}
+        self.callbacks = {}
+        self.messages = []
+        self.replies = []
 
     def send_message(self, callback, agent, message):
         def send(cnt):
             def my_callback(answer):
-                REQUESTS[cnt] = message
-                CALLBACKS[cnt] = callback
-                REPLIES.append((cnt, answer))
-            MESSAGES.append((agent, my_callback, message))
+                self.requests[cnt] = message
+                self.callbacks[cnt] = callback
+                self.replies.append((cnt, answer))
+            self.messages.append((agent, my_callback, message))
         send(self.cnt)
         self.cnt += 1
 
     def event_loop(self):
-        while MESSAGES or REPLIES:
-            while REPLIES:
-                cnt, answer = REPLIES.pop(0)
-                CALLBACKS[cnt](answer)
+        while self.messages or self.replies:
+            while self.replies:
+                cnt, answer = self.replies.pop(0)
+                self.callbacks[cnt](answer)
                 if VERBOSE:
-                    print '  %4d: %s -> %s' % (cnt, REQUESTS[cnt], json.dumps(answer))
-                del CALLBACKS[cnt]
-                del REQUESTS[cnt]
-            while MESSAGES:
-                agent, my_callback, message = MESSAGES.pop(0)
+                    print '  %4d: %s -> %s' % (
+                        cnt,
+                        self.requests[cnt],
+                        json.dumps(answer))
+                del self.callbacks[cnt]
+                del self.requests[cnt]
+            while self.messages:
+                agent, my_callback, message = self.messages.pop(0)
                 agent.receive(self.send_calculation, my_callback, message)
 
     def send_calculation(self, callback, token):
@@ -72,7 +71,6 @@ def run():
         vm = VirtualMachine()
         if VERBOSE:
             print "\n\n--"
-        vm.reset_event_loop()
 
         def callback(answer):
             print '%s -> %s' % (message, repr(answer))
