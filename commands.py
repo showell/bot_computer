@@ -1,15 +1,15 @@
 COMMANDS = [
+    ('DOUBLE x',
+        '["ADD", [null, x], [null, x]]'),
+
+    ('SQUARE x',
+        '["MULT", [null, x], [null, x]]'),
+
     ('APPLY f',
         ':f ...'),
 
     ('SPLAT f x',
         ':f *x'),
-
-    ('DOUBLE x',
-        'ADD x x'),
-
-    ('SQUARE x',
-        'MULT x x'),
 
     ('IS_ZERO x',
         'EQ x 0'),

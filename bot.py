@@ -33,7 +33,6 @@ class DispatchBot:
     def receive(self, send_calculation, callback, message):
         token = parse(message)
         assert token.kind == 'expression'
-        calculation = Calculation(token, send_calculation)
         send_calculation(callback, token.action, message)
 
 class IfBot:
@@ -60,10 +59,10 @@ class TranslateBot:
 
     def compute(self, send_calculation, callback, computed_args):
         args = [json.dumps(ca) for ca in computed_args]
-        new_message = '(' + translate(
+        new_message = translate(
             template_source=self.template_source,
             template_target=self.template_target,
-            args=args) + ')'
+            args=args)
         token = parse(new_message)
         assert token.kind == 'expression'
         send_calculation(callback, token.action, new_message)

@@ -4,15 +4,19 @@ import json
 
 def run():
     messages = [
-        '(FACTORIAL 5)',
-        '(ADD [1, 2] [3, 4])',
-        '(SQUARE 7)',
-        '(DOUBLE 13)',
+        '["ADD", [null, 1], [null, 2]]',
+        '["ADD", [null, [1, 2]], [null, [3, 4]]]',
+        '["DOUBLE", [null, 13]]',
+        '["SQUARE", ["ADD", [null, 3], [null, 4]]]',
+    ]
+
+    ignore = [
         '(TAG "td" "some value")',
         '(RANGE 5 15)',
         '(APPLY "ADD" (ADD 4 5) 10)',
         '(APPLY "ADD" (ADD "x" "y") "z")',
         '(DEREF 2 ["apple", "banana", "carrot", "dog"])',
+        '(FACTORIAL 5)',
         '(LEN [0, 1, 2, 3, 4])',
         '(LIST 5 7 9)',
         '(MAP_SLICE 1 [1, 2, 3] "DOUBLE")',

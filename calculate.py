@@ -9,8 +9,6 @@ a calculation to another actor; it gets passed in a
 send_calculation message.
 '''
 
-import json
-
 def make_arg(token, send_calculation):
     if token.kind == 'literal':
         return Literal(token)
@@ -19,7 +17,8 @@ def make_arg(token, send_calculation):
 
 class Literal:
     def __init__(self, token):
-        self.val = json.loads(token.val)
+        self.val = token.val
+        self.action = None
 
     def compute(self, callback):
         callback(self.val)
@@ -27,16 +26,13 @@ class Literal:
 class Calculation:
     def __init__(self, token, send_calculation):
         self.token = token
-        tokens = token.tokens[:]
         self.action = token.action
-        self.args = [make_arg(t, send_calculation) for t in tokens[1:]]
+        self.message = str(token)
+        self.args = [make_arg(t, send_calculation) for t in token.args]
         self.send_calculation = send_calculation
 
     def compute(self, callback):
-        token = self.token
-        message = str(token)
-        action = str(token.tokens[0])
-        self.send_calculation(callback, action, message)
+        self.send_calculation(callback, self.action, self.message)
 
     def compute_args(self, callback):
         computed_args = []
