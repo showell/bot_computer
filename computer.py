@@ -10,10 +10,10 @@ def run():
         '["SQUARE", ["ADD", [null, 3], [null, 4]]]',
         '["DOUBLE", ["DOUBLE", [null, 5]]]',
         '["TAG", [null, "td"], [null, "hello world"]]',
+        '["RANGE", [null, 5], ["ADD", [null, 5], [null, 10]]]',
     ]
 
     ignore = [
-        '(RANGE 5 15)',
         '(APPLY "ADD" (ADD 4 5) 10)',
         '(APPLY "ADD" (ADD "x" "y") "z")',
         '(DEREF 2 ["apple", "banana", "carrot", "dog"])',
