@@ -1,12 +1,12 @@
 from bot import BOTS
 import json
 
-
 VERBOSE = False
 
 class VirtualMachine:
-    def __init__(self):
+    def __init__(self, bots):
         self.cnt = 0
+        self.bots = bots
         self.requests = {}
         self.callbacks = {}
         self.messages = []
@@ -42,11 +42,21 @@ class VirtualMachine:
         # generalize
         message = str(token)
         action = str(token.tokens[0])
-        bot = BOTS[action]
+        bot = self.bots[action]
         self.send_message(callback, bot, message)
 
+    def process_message(self, message):
+        human = self.bots['Human']
+        if VERBOSE:
+            print "\n\n--"
+
+        def callback(answer):
+            print '%s -> %s' % (message, repr(answer))
+
+        self.send_message(callback, human, message)
+        self.event_loop()
+
 def run():
-    human = BOTS['Human']
     messages = [
         '(FACTORIAL 5)',
         '(ADD [1, 2] [3, 4])',
@@ -68,15 +78,9 @@ def run():
         '(MATH_TABLE 7)',
     ]
     for message in messages:
-        vm = VirtualMachine()
-        if VERBOSE:
-            print "\n\n--"
+        vm = VirtualMachine(BOTS)
+        vm.process_message(message)
 
-        def callback(answer):
-            print '%s -> %s' % (message, repr(answer))
-
-        vm.send_message(callback, human, message)
-        vm.event_loop()
 
 if __name__ == '__main__':
     run()
