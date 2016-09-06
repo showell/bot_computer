@@ -8,6 +8,22 @@ class VirtualMachine:
         self.replies = []
         self.verbose = verbose
 
+    def _dispatch_message_to_bot(self, seq, bot, message, callback):
+        '''
+        We need a bot to do work for us, and we have a sequence
+        number and a message, plus some callback that we need
+        to send the bot's reply to.  The callback is often a
+        wrapper to some mechanism to forward the reply on to
+        another bot that requested the calculation.
+        '''
+        self.requests[seq] = message
+        self.callbacks[seq] = callback
+        def make_callback(seq):
+            def my_callback(answer):
+                self.replies.append((seq, answer))
+            return my_callback
+        bot.receive(self.send_calculation, make_callback(seq), message)
+
     def send_message(self, callback, bot, message):
         self.messages.append((self.seq, bot, message, callback))
         self.seq += 1
@@ -26,13 +42,7 @@ class VirtualMachine:
                 del self.requests[seq]
             while self.messages:
                 seq, bot, message, callback = self.messages.pop(0)
-                self.requests[seq] = message
-                self.callbacks[seq] = callback
-                def make_callback(seq):
-                    def my_callback(answer):
-                        self.replies.append((seq, answer))
-                    return my_callback
-                bot.receive(self.send_calculation, make_callback(seq), message)
+                self._dispatch_message_to_bot(seq, bot, message, callback)
 
     def send_calculation(self, callback, token):
         # generalize
