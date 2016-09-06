@@ -43,20 +43,17 @@ COMMANDS = [
             1
             (MULT x (FACTORIAL (DECR x)))'''),
 
-    ('MAP_ONE i lst f',
-        'APPLY f (DEREF i lst)'),
-
-    ('MAP_REST i lst f',
+    ('MAP_SLICE start lst f',
         '''
         IF
-            (EQ i (LEN lst))
+            (EQ start (LEN lst))
             []
             (ADD
-                (LIST (MAP_ONE i lst f))
-                (MAP_REST (INCR i) lst f))'''),
+                (LIST (APPLY f (DEREF start lst)))
+                (MAP_SLICE (INCR start) lst f))'''),
 
     ('MAP lst f',
-        'MAP_REST 0 lst f'),
+        'MAP_SLICE 0 lst f'),
 
 
     ('MATH_ROW n',
