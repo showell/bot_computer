@@ -33,12 +33,12 @@ def run():
         '["TD", [null, "hello"]]',
         '["CONCAT", [null, ["a", "b", "c"]]]',
         '["TR", ["LIST", ["TD", [null, "a"]], [null, "<td>b</td>"]]]',
+        '["APPLY", ["ADD", [null, 1], [null, 2]]]',
     ]
 
     ignore = [
         '(APPLY "ADD" (ADD 4 5) 10)',
         '(APPLY "ADD" (ADD "x" "y") "z")',
-        '(FACTORIAL 5)',
         '(MAP_SLICE 1 [1, 2, 3] "DOUBLE")',
         '(MAP [1, 2, 3] "SQUARE")',
         '(SPLAT "ADD" [1, 2, 3])',

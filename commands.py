@@ -88,9 +88,6 @@ COMMANDS = [
 
     ###
 
-    ('APPLY f',
-        ':f ...'),
-
     ('SPLAT f x',
         ':f *x'),
 

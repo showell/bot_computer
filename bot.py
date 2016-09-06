@@ -46,6 +46,13 @@ class IfBot:
                 make_arg(token.args[2], send_calculation).compute(callback)
         calculation.compute(on_callback)
 
+class ApplyBot:
+    def receive(self, send_calculation, callback, message):
+        token = parse(message)
+        assert len(token.args) == 1
+        calculation = make_arg(token.args[0], send_calculation)
+        calculation.compute(callback)
+
 class TranslateBot:
     def __init__(self, template_source, template_target):
         self.template_source = template_source
@@ -74,6 +81,7 @@ for source, target in COMMANDS:
     BOTS[name] = TranslateBot(template_source=source, template_target=target)
 
 BOTS['IF'] = IfBot()
+BOTS['APPLY'] = ApplyBot()
 
 BOTS['Dispatch'] = DispatchBot()
 
