@@ -9,43 +9,44 @@ REQUESTS = {}
 MESSAGES = []
 REPLIES = []
 
-def reset_event_loop():
-    global CNT
-    CNT = 0
-    assert REQUESTS == {}
-    assert MESSAGES == []
-    assert REPLIES == []
+class VirtualMachine:
+    def reset_event_loop(self):
+        global CNT
+        CNT = 0
+        assert REQUESTS == {}
+        assert MESSAGES == []
+        assert REPLIES == []
 
-def send_message(callback, agent, message):
-    global CNT
-    def send(cnt):
-        def my_callback(answer):
-            REQUESTS[cnt] = message
-            CALLBACKS[cnt] = callback
-            REPLIES.append((cnt, answer))
-        MESSAGES.append((agent, my_callback, message))
-    send(CNT)
-    CNT += 1
+    def send_message(self, callback, agent, message):
+        global CNT
+        def send(cnt):
+            def my_callback(answer):
+                REQUESTS[cnt] = message
+                CALLBACKS[cnt] = callback
+                REPLIES.append((cnt, answer))
+            MESSAGES.append((agent, my_callback, message))
+        send(CNT)
+        CNT += 1
 
-def event_loop():
-    while MESSAGES or REPLIES:
-        while REPLIES:
-            cnt, answer = REPLIES.pop(0)
-            CALLBACKS[cnt](answer)
-            if VERBOSE:
-                print '  %4d: %s -> %s' % (cnt, REQUESTS[cnt], json.dumps(answer))
-            del CALLBACKS[cnt]
-            del REQUESTS[cnt]
-        while MESSAGES:
-            agent, my_callback, message = MESSAGES.pop(0)
-            agent.receive(send_calculation, my_callback, message)
+    def event_loop(self):
+        while MESSAGES or REPLIES:
+            while REPLIES:
+                cnt, answer = REPLIES.pop(0)
+                CALLBACKS[cnt](answer)
+                if VERBOSE:
+                    print '  %4d: %s -> %s' % (cnt, REQUESTS[cnt], json.dumps(answer))
+                del CALLBACKS[cnt]
+                del REQUESTS[cnt]
+            while MESSAGES:
+                agent, my_callback, message = MESSAGES.pop(0)
+                agent.receive(self.send_calculation, my_callback, message)
 
-def send_calculation(callback, token):
-    # generalize
-    message = str(token)
-    action = str(token.tokens[0])
-    bot = BOTS[action]
-    send_message(callback, bot, message)
+    def send_calculation(self, callback, token):
+        # generalize
+        message = str(token)
+        action = str(token.tokens[0])
+        bot = BOTS[action]
+        self.send_message(callback, bot, message)
 
 def run():
     human = Human()
@@ -70,15 +71,16 @@ def run():
         '(MATH_TABLE 7)',
     ]
     for message in messages:
+        vm = VirtualMachine()
         if VERBOSE:
             print "\n\n--"
-        reset_event_loop()
+        vm.reset_event_loop()
 
         def callback(answer):
             print '%s -> %s' % (message, repr(answer))
 
-        send_message(callback, human, message)
-        event_loop()
+        vm.send_message(callback, human, message)
+        vm.event_loop()
 
 if __name__ == '__main__':
     run()
