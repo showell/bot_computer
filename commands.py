@@ -29,8 +29,8 @@ COMMANDS = [
     ('TD val',
         'TAG "td" val'),
 
-    ('TR val',
-        'TAG "tr" val'),
+    ('TR',
+        'TAG "tr" (SPLAT "ADD" ...)'),
 
     ('RANGE x y',
         '''
