@@ -9,13 +9,7 @@ class VirtualMachine:
         self.verbose = verbose
 
     def send_message(self, callback, bot, message):
-        def send(seq):
-            def my_callback(answer):
-                self.requests[seq] = message
-                self.callbacks[seq] = callback
-                self.replies.append((seq, answer))
-            self.messages.append((bot, my_callback, message))
-        send(self.seq)
+        self.messages.append((self.seq, bot, message, callback))
         self.seq += 1
 
     def event_loop(self):
@@ -31,8 +25,14 @@ class VirtualMachine:
                 del self.callbacks[seq]
                 del self.requests[seq]
             while self.messages:
-                bot, my_callback, message = self.messages.pop(0)
-                bot.receive(self.send_calculation, my_callback, message)
+                seq, bot, message, callback = self.messages.pop(0)
+                self.requests[seq] = message
+                self.callbacks[seq] = callback
+                def make_callback(seq):
+                    def my_callback(answer):
+                        self.replies.append((seq, answer))
+                    return my_callback
+                bot.receive(self.send_calculation, make_callback(seq), message)
 
     def send_calculation(self, callback, token):
         # generalize
