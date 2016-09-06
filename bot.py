@@ -37,13 +37,14 @@ class DispatchBot:
 
 class IfBot:
     def receive(self, send_calculation, callback, message):
+        print message
         token = parse(message)
-        calculation = Calculation(token.tokens[1], send_calculation)
+        calculation = make_arg(token.args[0], send_calculation)
         def on_callback(answer):
             if answer:
-                make_arg(token.tokens[2], send_calculation).compute(callback)
+                make_arg(token.args[1], send_calculation).compute(callback)
             else:
-                make_arg(token.tokens[3], send_calculation).compute(callback)
+                make_arg(token.args[2], send_calculation).compute(callback)
         calculation.compute(on_callback)
 
 class TranslateBot:

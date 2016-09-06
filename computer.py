@@ -19,6 +19,15 @@ def run():
         '["IS_ZERO", ["ADD", [null, 3], [null, -3]]]',
         '["INCR", [null, 10]]',
         '["DECR", [null, 10]]',
+        '["IF", [null, 1], [null, "if-case"], [null, "else-case"]]',
+        '''
+        [
+            "IF",
+            ["EQ", [null, "x"], [null, "y"]],
+            [null, "if-case"],
+            [null, "else-case"]
+        ]
+        ''',
     ]
 
     ignore = [
