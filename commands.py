@@ -19,20 +19,20 @@ COMMANDS = [
         ]
         '''),
 
+    ('IS_ZERO x',
+        '["EQ", [null, x], [null, 0]]'),
+
+    ('INCR x',
+        '["ADD", [null, x], [null, 1]]'),
+
+    ('DECR x',
+        '["ADD", [null, x], [null, -1]]'),
+
     ('APPLY f',
         ':f ...'),
 
     ('SPLAT f x',
         ':f *x'),
-
-    ('IS_ZERO x',
-        'EQ x 0'),
-
-    ('INCR x',
-        'ADD x 1'),
-
-    ('DECR x',
-        'ADD x -1'),
 
     ('TABLE val',
         'ADD "<table border=1>" val "</table>"'),
