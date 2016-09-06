@@ -11,22 +11,20 @@ REPLIES = []
 
 class VirtualMachine:
     def reset_event_loop(self):
-        global CNT
-        CNT = 0
+        self.cnt = 0
         assert REQUESTS == {}
         assert MESSAGES == []
         assert REPLIES == []
 
     def send_message(self, callback, agent, message):
-        global CNT
         def send(cnt):
             def my_callback(answer):
                 REQUESTS[cnt] = message
                 CALLBACKS[cnt] = callback
                 REPLIES.append((cnt, answer))
             MESSAGES.append((agent, my_callback, message))
-        send(CNT)
-        CNT += 1
+        send(self.cnt)
+        self.cnt += 1
 
     def event_loop(self):
         while MESSAGES or REPLIES:
