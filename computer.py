@@ -35,6 +35,7 @@ def run():
         '["TR", ["LIST", ["TD", [null, "a"]], [null, "<td>b</td>"]]]',
         '["APPLY", ["ADD", [null, 1], [null, 2]]]',
         '["MAP", [null, [1, 2, 3]], [null, "DOUBLE"]]',
+        '["MATH_TR", [null, 7]]',
     ]
 
     ignore = [

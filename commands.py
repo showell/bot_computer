@@ -117,6 +117,17 @@ COMMANDS = [
     ('MAP lst func',
         '["MAP_SLICE", [null, lst], [null, 0], [null, func]]'),
 
+    ('MATH_TR num',
+        '''
+        [
+            "TR",
+            [
+                "MAP",
+                ["MATH_ROW", [null, num]],
+                [null, "TD"]
+            ]
+        ]
+        '''),
     ###
 
     ('SPLAT f x',
@@ -125,14 +136,6 @@ COMMANDS = [
     ('TABLE val',
         'ADD "<table border=1>" val "</table>"'),
 
-    ('MATH_TR n',
-        '''
-        TR (
-            MAP
-                (MATH_ROW n)
-                "TD"
-        )
-        '''),
     ('MATH_TABLE n',
         '''
         TABLE (
