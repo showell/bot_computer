@@ -44,7 +44,7 @@ extended to work with multiple processes or multiple computers.
 - Because "messie" code is just JSON, functions written in "messie" can
 be up-ported to faster or more expressive languages like C/Python/Ruby/JS/Lisp.
 - Because "messie" code is just JSON, functions written in higher level
-languages can be down-ported to JSON if you subset those languages to use
+languages can be down-ported to "messie" if you subset those languages to use
 only functions and immutable types.
 
 The current implemenation of "messie" is in `computer.py`.  The computer
