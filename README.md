@@ -27,7 +27,7 @@ The language is intended to be minimal in these regards:
 - The only syntax is JSON (sort of).
 
 The language is intended to be complete in these regards:
-- You will be able to manipulate all the JSON-serialize types,
+- You will be able to manipulate all the JSON-serializable types,
 such as integers, floats, strings, lists, and dictionaries.
 - You can have functions that work on other functions, such
 as MAP and APPLY.
