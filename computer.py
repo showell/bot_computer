@@ -34,7 +34,7 @@ def run():
         '["CONCAT", [null, ["a", "b", "c"]]]',
         '["TR", ["LIST", ["TD", [null, "a"]], [null, "<td>b</td>"]]]',
         '["APPLY", ["ADD", [null, 1], [null, 2]]]',
-        '["MAP_ONE", [null, [1, 2, 3]], [null, 1], [null, "DOUBLE"]]',
+        '["MAP", [null, [1, 2, 3]], [null, "DOUBLE"]]',
     ]
 
     ignore = [

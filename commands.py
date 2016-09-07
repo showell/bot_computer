@@ -86,16 +86,36 @@ COMMANDS = [
     ('TD val',
         '["TAG", [null, "td"], [null, val]]'),
 
-    ('MAP_ONE lst i func',
+    ('MAP_SLICE lst index func',
         '''
         [
-            "APPLY",
+            "IF",
+            ["EQ", [null, index], ["LEN", [null, lst]]],
+            [null, []],
             [
-                func,
-                ["DEREF", [null, i], [null, lst]]
+                "ADD",
+                [
+                    "LIST",
+                    [
+                        "APPLY",
+                        [
+                            func,
+                            ["DEREF", [null, index], [null, lst]]
+                        ]
+                    ]
+                ],
+                [
+                    "MAP_SLICE",
+                    [null, lst],
+                    ["INCR", [null, index]],
+                    [null, func]
+                ]
             ]
         ]
         '''),
+
+    ('MAP lst func',
+        '["MAP_SLICE", [null, lst], [null, 0], [null, func]]'),
 
     ###
 
@@ -104,19 +124,6 @@ COMMANDS = [
 
     ('TABLE val',
         'ADD "<table border=1>" val "</table>"'),
-
-    ('MAP_SLICE start lst f',
-        '''
-        IF
-            (EQ start (LEN lst))
-            []
-            (ADD
-                (LIST (APPLY f (DEREF start lst)))
-                (MAP_SLICE (INCR start) lst f))'''),
-
-    ('MAP lst f',
-        'MAP_SLICE 0 lst f'),
-
 
     ('MATH_TR n',
         '''
