@@ -57,6 +57,20 @@ The computer currently calculates a bunch of messages to standard output,
 and then it also calculates an HTML table of math results that it writes
 to `foo.html`.
 
+Here is example HTML output from "messie":
+
+<table border=1>
+<tr><td>n</td><td>double</td><td>square</td><td>factorial</td></tr>
+<tr><td>5</td><td>10</td><td>25</td><td>120</td></tr>
+<tr><td>6</td><td>12</td><td>36</td><td>720</td></tr>
+<tr><td>7</td><td>14</td><td>49</td><td>5040</td></tr>
+<tr><td>8</td><td>16</td><td>64</td><td>40320</td></tr>
+<tr><td>9</td><td>18</td><td>81</td><td>362880</td></tr>
+<tr><td>10</td><td>20</td><td>100</td><td>3628800</td></tr>
+<tr><td>11</td><td>22</td><td>121</td><td>39916800</td></tr>
+<tr><td>12</td><td>24</td><td>144</td><td>479001600</td></tr>
+<tr><td>13</td><td>26</td><td>169</td><td>6227020800</td></tr>
+</table>
 
 
 
