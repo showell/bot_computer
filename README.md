@@ -1,3 +1,5 @@
+## Overview
+
 This project is inspired by some conversations I had
 with my friend David, who I met through the
 [Zulip project](https://github.com/zulip/zulip).  I am
@@ -20,11 +22,15 @@ paradigm.  The name "messie" refers to messaging, not messiness.
 The language looks superficially messy, but I am striving to
 make the underlying architecture simple and clean.
 
+## Minimal
+
 The language is intended to be minimal in these regards:
 - You cannot mutate data structures, only create new ones.
 - There are no variables or assignments.
 - There are only a small number of built-in functions.
 - The only syntax is JSON (sort of).
+
+## Complete
 
 The language is intended to be complete in these regards:
 - You will be able to manipulate all the JSON-serializable types,
@@ -35,8 +41,11 @@ as MAP and APPLY.
 - It's Turing complete, and you can do things like create an HTML table
 of factorial values with relative ease.
 
+## Unique
 The language is unique in these respects:
 - Functions communicate by passing around JSON data structures as messages.
+
+## Extendible
 
 The language is extendible:
 - Because "messie" fundamentally works with messages, the VM could be
@@ -46,6 +55,8 @@ be up-ported to faster or more expressive languages like C/Python/Ruby/JS/Lisp.
 - Because "messie" code is just JSON, functions written in higher level
 languages can be down-ported to "messie" if you subset those languages to use
 only functions and immutable types.
+
+## Implementation
 
 The current implemenation of "messie" is in `computer.py`.  The computer
 runs "messie" using a VM that is all in-process, but which uses a message
