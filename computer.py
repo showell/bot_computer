@@ -55,7 +55,7 @@ def run():
         open('foo.html', 'w').write(answer)
 
     vm.process_message(write_html,
-        '["MATH_TABLE", ["RANGE", [null, 5], [null, 12]]]')
+        '["MATH_TABLE", ["RANGE", [null, 5], [null, 14]]]')
 
 if __name__ == '__main__':
     run()
