@@ -58,8 +58,11 @@ only functions and immutable types.
 
 ## Implementation
 
-The current implemenation of "messie" is in `computer.py`.  The computer
-runs "messie" using a VM that is all in-process, but which uses a message
+The current implemenation of "messie" is in
+[computer.py] (https://github.com/showell/bot_computer/blob/master/computer.py).
+
+The computer runs "messie" using a VM that is all in-process, but which
+uses a message
 queue to dispatch calculations.   It can handle deeply recursive functions
 despite Python's recursion limit, because function dispatch is mediated
 through a queue.
