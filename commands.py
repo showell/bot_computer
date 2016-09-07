@@ -86,6 +86,17 @@ COMMANDS = [
     ('TD val',
         '["TAG", [null, "td"], [null, val]]'),
 
+    ('MAP_ONE lst i func',
+        '''
+        [
+            "APPLY",
+            [
+                func,
+                ["DEREF", [null, i], [null, lst]]
+            ]
+        ]
+        '''),
+
     ###
 
     ('SPLAT f x',
