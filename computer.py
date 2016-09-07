@@ -36,25 +36,26 @@ def run():
         '["APPLY", ["ADD", [null, 1], [null, 2]]]',
         '["MAP", [null, [1, 2, 3]], [null, "DOUBLE"]]',
         '["MATH_TR", [null, 7]]',
+        '["MATH_TABLE_GUTS", ["RANGE", [null, 5], [null, 12]]]',
+        '["TABLE", [null, "header_row"], [null, ["foo", "bar"]]]',
     ]
 
     ignore = [
-        '(APPLY "ADD" (ADD 4 5) 10)',
-        '(APPLY "ADD" (ADD "x" "y") "z")',
-        '(MAP_SLICE 1 [1, 2, 3] "DOUBLE")',
-        '(MAP [1, 2, 3] "SQUARE")',
-        '(SPLAT "ADD" [1, 2, 3])',
-        '(MATH_TR 7)',
         '(MATH_TABLE 7)',
     ]
     for message in messages:
         vm = VirtualMachine(BOTS)
 
         def callback(answer):
-            print '%s -> %s' % (message, str(answer))
+            print '%s ->\n    %s\n' % (message, str(answer))
 
         vm.process_message(callback, message)
 
+    def write_html(answer):
+        open('foo.html', 'w').write(answer)
+
+    vm.process_message(write_html,
+        '["MATH_TABLE", ["RANGE", [null, 5], [null, 12]]]')
 
 if __name__ == '__main__':
     run()

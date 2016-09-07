@@ -128,26 +128,50 @@ COMMANDS = [
             ]
         ]
         '''),
-    ###
 
-    ('SPLAT f x',
-        ':f *x'),
-
-    ('TABLE val',
-        'ADD "<table border=1>" val "</table>"'),
-
-    ('MATH_TABLE n',
+    ('MATH_TABLE_GUTS lst',
         '''
-        TABLE (
-            ADD
-            (TR (MAP ["i", "2*i", "i**2", "i!"] "TD"))
-            (SPLAT "ADD" (
-                MAP
-                    (RANGE 0 n)
-                    "MATH_TR"
-                )
-            )
-        )
+        [
+            "MAP",
+            [null, lst],
+            [null, "MATH_TR"]
+        ]
         '''),
+
+    ('NL str',
+        '["ADD", [null, str], [null, "\\n"]]'),
+
+    ('TABLE header_row elems',
+        '''
+        [
+            "ADD",
+            [null, "<table border=1>"],
+            [null, "\\n"],
+            [null, header_row],
+            [null, "\\n"],
+            [
+                "CONCAT",
+                ["MAP", [null, elems], [null, "NL"]]
+            ],
+            [null, "</table>"]
+        ]
+        '''),
+
+    ('MATH_TABLE number_lst',
+        '''
+        [
+            "TABLE",
+            [
+                "TR",
+                [
+                    "MAP",
+                    [null, ["n", "double", "square", "factorial"]],
+                    [null, "TD"]
+                ]
+            ],
+            ["MATH_TABLE_GUTS", [null, number_lst]]
+        ]
+        '''),
+
 ]
 
