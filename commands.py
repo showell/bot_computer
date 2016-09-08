@@ -1,97 +1,86 @@
 COMMANDS = [
     ('DOUBLE x',
-        '["ADD", [null, x], [null, x]]'),
+        ["ADD", {"value": "x"}, {"value": "x"}]),
 
     ('SQUARE x',
-        '["MULT", [null, x], [null, x]]'),
+        ["MULT", {"value": "x"}, {"value": "x"}]),
 
     ('TAG tag val',
-        '''
         [
             "ADD",
-            [null, "<"],
-            [null, tag],
-            [null, ">"],
-            ["STR", [null, val]],
-            [null, "</"],
-            [null, tag],
-            [null, ">"]
-        ]
-        '''),
+            [None, "<"],
+            {"value": "tag"},
+            [None, ">"],
+            ["STR", {"value": "val"}],
+            [None, "</"],
+            {"value": "tag"},
+            [None, ">"]
+        ]),
 
     ('IS_ZERO x',
-        '["EQ", [null, x], [null, 0]]'),
+        ["EQ", {"value": "x"}, [None, 0]]),
 
     ('INCR x',
-        '["ADD", [null, x], [null, 1]]'),
+        ["ADD", {"value": "x"}, [None, 1]]),
 
     ('DECR x',
-        '["ADD", [null, x], [null, -1]]'),
+        ["ADD", {"value": "x"}, [None, -1]]),
 
     ('FACTORIAL x',
-        '''
         [
             "IF",
-            ["IS_ZERO", [null, x]],
-            [null, 1],
+            ["IS_ZERO", {"value": "x"}],
+            [None, 1],
             [
                 "MULT",
-                [null, x],
-                ["FACTORIAL", ["DECR", [null, x]]]
+                {"value": "x"},
+                ["FACTORIAL", ["DECR", {"value": "x"}]]
             ]
-        ]
-        '''),
+        ]),
 
     ('MATH_ROW val',
-        '''
         [
             "LIST",
-            ["STR", [null, val]],
-            ["DOUBLE", [null, val]],
-            ["SQUARE", [null, val]],
-            ["FACTORIAL", [null, val]]
-        ]
-        '''),
+            ["STR", {"value": "val"}],
+            ["DOUBLE", {"value": "val"}],
+            ["SQUARE", {"value": "val"}],
+            ["FACTORIAL", {"value": "val"}]
+        ]),
 
     ('CONCAT_SLICE index lst',
-        '''
         [
             "IF",
-            ["EQ", [null, index], ["LEN", [null, lst]]],
-            [null, ""],
+            ["EQ", {"value": "index"}, ["LEN", {"value": "lst"}]],
+            [None, ""],
             [
                 "ADD",
-                ["DEREF", [null, index], [null, lst]],
+                ["DEREF", {"value": "index"}, {"value": "lst"}],
                 [
                     "CONCAT_SLICE",
-                    ["INCR", [null, index]],
-                    [null, lst]
+                    ["INCR", {"value": "index"}],
+                    {"value": "lst"}
                 ]
             ]
-        ]
-        '''),
+        ]),
 
     ('CONCAT lst',
-        '["CONCAT_SLICE", [null, 0], [null, lst]]'),
+        ["CONCAT_SLICE", [None, 0], {"value": "lst"}]),
 
     ('TR elems',
-        '''
         [
             "TAG",
-            [null, "tr"],
-            ["CONCAT", [null, elems]]
-        ]
-        '''),
+            [None, "tr"],
+            ["CONCAT", {"value": "elems"}]
+        ]),
 
     ('TD val',
-        '["TAG", [null, "td"], [null, val]]'),
+        ["TAG", [None, "td"], {"value": "val"}]),
 
     ('MAP_SLICE lst index func',
-        '''
         [
             "IF",
-            ["EQ", [null, index], ["LEN", [null, lst]]],
-            [null, []],
+            ["EQ", {"value": "index"}, ["LEN", {"value": "lst"}]],
+            [None, []],
             [
                 "ADD",
                 [
@@ -99,79 +88,70 @@ COMMANDS = [
                     [
                         "APPLY",
                         [
-                            func,
-                            ["DEREF", [null, index], [null, lst]]
+                            {"name": "func"},
+                            ["DEREF", {"value": "index"}, {"value": "lst"}]
                         ]
                     ]
                 ],
                 [
                     "MAP_SLICE",
-                    [null, lst],
-                    ["INCR", [null, index]],
-                    [null, func]
+                    {"value": "lst"},
+                    ["INCR", {"value": "index"}],
+                    {"value": "func"}
                 ]
             ]
-        ]
-        '''),
+        ]),
 
     ('MAP lst func',
-        '["MAP_SLICE", [null, lst], [null, 0], [null, func]]'),
+        ["MAP_SLICE", {"value": "lst"}, [None, 0], {"value": "func"}]),
 
     ('MATH_TR num',
-        '''
         [
             "TR",
             [
                 "MAP",
-                ["MATH_ROW", [null, num]],
-                [null, "TD"]
+                ["MATH_ROW", {"value": "num"}],
+                [None, "TD"]
             ]
-        ]
-        '''),
+        ]),
 
     ('MATH_TABLE_GUTS lst',
-        '''
         [
             "MAP",
-            [null, lst],
-            [null, "MATH_TR"]
-        ]
-        '''),
+            {"value": "lst"},
+            [None, "MATH_TR"]
+        ]),
 
     ('NL str',
-        '["ADD", [null, str], [null, "\\n"]]'),
+        ["ADD", {"value": "str"}, [None, "\n"]]),
 
     ('TABLE header_row elems',
-        '''
         [
             "ADD",
-            [null, "<table border=1>"],
-            [null, "\\n"],
-            [null, header_row],
-            [null, "\\n"],
+            [None, "<table border=1>"],
+            [None, "\n"],
+            {"value": "header_row"},
+            [None, "\n"],
             [
                 "CONCAT",
-                ["MAP", [null, elems], [null, "NL"]]
+                ["MAP", {"value": "elems"}, [None, "NL"]]
             ],
-            [null, "</table>"]
-        ]
-        '''),
+            [None, "</table>"]
+        ]),
 
     ('MATH_TABLE number_lst',
-        '''
         [
             "TABLE",
             [
                 "TR",
                 [
                     "MAP",
-                    [null, ["n", "double", "square", "factorial"]],
-                    [null, "TD"]
+                    [None, ["n", "double", "square", "factorial"]],
+                    [None, "TD"]
                 ]
             ],
-            ["MATH_TABLE_GUTS", [null, number_lst]]
-        ]
-        '''),
+            ["MATH_TABLE_GUTS", {"value": "number_lst"}]
+        ]),
 
 ]
 

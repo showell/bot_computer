@@ -65,11 +65,10 @@ class TranslateBot:
             lambda args: self.compute(send_calculation, callback, args))
 
     def compute(self, send_calculation, callback, computed_args):
-        args = [json.dumps(ca) for ca in computed_args]
         new_message = translate(
             template_source=self.template_source,
             template_target=self.template_target,
-            args=args)
+            args=computed_args)
         token = parse(new_message)
         assert token.kind == 'expression'
         send_calculation(callback, token.action, new_message)
