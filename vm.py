@@ -1,5 +1,3 @@
-from parser import parse
-
 class VirtualMachine:
     def __init__(self, bots, verbose=False):
         self.seq = 0
@@ -10,9 +8,9 @@ class VirtualMachine:
         self.replies = []
         self.verbose = verbose
 
-    def process_message(self, callback, message):
+    def process_program(self, callback, program):
         '''
-        Send a message to the "root" bot and then start our
+        Send a message to the appropriate bot and then start our
         event loop to handle replies from various bots.
 
         To avoid hitting maximum-recursion limits and to
@@ -23,7 +21,6 @@ class VirtualMachine:
         if self.verbose:
             print "\n\n--"
 
-        program = parse(message)
         self.send_calculation(callback, program)
         self.event_loop()
 

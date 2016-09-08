@@ -1,58 +1,56 @@
 from bot import BOTS
 from vm import VirtualMachine
-import json
 
 def run():
-    messages = [
-        '["ADD", [null, 1], [null, 2]]',
-        '["ADD", [null, [1, 2]], [null, [3, 4]]]',
-        '["DOUBLE", [null, 13]]',
-        '["SQUARE", ["ADD", [null, 3], [null, 4]]]',
-        '["DOUBLE", ["DOUBLE", [null, 5]]]',
-        '["TAG", [null, "td"], [null, "hello world"]]',
-        '["RANGE", [null, 5], ["ADD", [null, 5], [null, 10]]]',
-        '["LIST", [null, 5], [null, 7], ["ADD", [null, 8], [null, 1]]]',
-        '["LEN", [null, [0,1,2,3,4]]]',
-        '["DEREF", [null, 2], [null, ["apple", "banana", "carrot", "dog"]]]',
-        '["DEREF", [null, "x"], [null, {"x": 5, "y": 7}]]',
-        '["IS_ZERO", [null, 5]]',
-        '["IS_ZERO", ["ADD", [null, 3], [null, -3]]]',
-        '["INCR", [null, 10]]',
-        '["DECR", [null, 10]]',
-        '["IF", [null, 1], [null, "if-case"], [null, "else-case"]]',
-        '''
+    programs = [
+        ["ADD", [None, 1], [None, 2]],
+        ["ADD", [None, [1, 2]], [None, [3, 4]]],
+        ["DOUBLE", [None, 13]],
+        ["SQUARE", ["ADD", [None, 3], [None, 4]]],
+        ["DOUBLE", ["DOUBLE", [None, 5]]],
+        ["TAG", [None, "td"], [None, "hello world"]],
+        ["RANGE", [None, 5], ["ADD", [None, 5], [None, 10]]],
+        ["LIST", [None, 5], [None, 7], ["ADD", [None, 8], [None, 1]]],
+        ["LEN", [None, [0,1,2,3,4]]],
+        ["DEREF", [None, 2], [None, ["apple", "banana", "carrot", "dog"]]],
+        ["DEREF", [None, "x"], [None, {"x": 5, "y": 7}]],
+        ["IS_ZERO", [None, 5]],
+        ["IS_ZERO", ["ADD", [None, 3], [None, -3]]],
+        ["INCR", [None, 10]],
+        ["DECR", [None, 10]],
+        ["IF", [None, 1], [None, "if-case"], [None, "else-case"]],
         [
             "IF",
-            ["EQ", [null, "x"], [null, "y"]],
-            [null, "if-case"],
-            [null, "else-case"]
-        ]
-        ''',
-        '["FACTORIAL", [null, 5]]',
-        '["MATH_ROW", [null, 7]]',
-        '["TD", [null, "hello"]]',
-        '["CONCAT", [null, ["a", "b", "c"]]]',
-        '["TR", ["LIST", ["TD", [null, "a"]], [null, "<td>b</td>"]]]',
-        '["APPLY", [[null, "ADD"], [null, 1], [null, 2]]]',
-        '["MAP", [null, [1, 2, 3]], [null, "DOUBLE"]]',
-        '["MATH_TR", [null, 7]]',
-        '["MATH_TABLE_GUTS", ["RANGE", [null, 5], [null, 12]]]',
-        '["TABLE", [null, "header_row"], [null, ["foo", "bar"]]]',
+            ["EQ", [None, "x"], [None, "y"]],
+            [None, "if-case"],
+            [None, "else-case"]
+        ],
+        ["FACTORIAL", [None, 5]],
+        ["MATH_ROW", [None, 7]],
+        ["TD", [None, "hello"]],
+        ["CONCAT", [None, ["a", "b", "c"]]],
+        ["TR", ["LIST", ["TD", [None, "a"]], [None, "<td>b</td>"]]],
+        ["APPLY", [[None, "ADD"], [None, 1], [None, 2]]],
+        ["MAP", [None, [1, 2, 3]], [None, "DOUBLE"]],
+        ["MATH_TR", [None, 7]],
+        ["MATH_TABLE_GUTS", ["RANGE", [None, 5], [None, 12]]],
+        ["TABLE", [None, "header_row"], [None, ["foo", "bar"]]],
     ]
 
-    for message in messages:
+    for program in programs:
         vm = VirtualMachine(BOTS)
 
         def callback(answer):
-            print '%s ->\n    %s\n' % (message, str(answer))
+            print '%s ->\n    %s\n' % (program, str(answer))
 
-        vm.process_message(callback, message)
+        vm.process_program(callback, program)
 
     def write_html(answer):
         open('foo.html', 'w').write(answer)
 
-    vm.process_message(write_html,
-        '["MATH_TABLE", ["RANGE", [null, 5], [null, 14]]]')
+    vm = VirtualMachine(BOTS)
+    vm.process_program(write_html,
+        ["MATH_TABLE", ["RANGE", [None, 5], [None, 14]]])
 
 if __name__ == '__main__':
     run()
