@@ -43,14 +43,14 @@ def do_str(val):
 
 def make_builtin_bots(bot_builder):
     tups = [
-        ('ADD', do_add),
-        ('DEREF', do_deref),
-        ('EQ', do_eq),
-        ('LEN', do_len),
-        ('LIST', do_list),
-        ('MULT', do_multiply),
-        ('RANGE', do_range),
-        ('STR', do_str),
+        ('add', do_add),
+        ('deref', do_deref),
+        ('eq', do_eq),
+        ('len', do_len),
+        ('list', do_list),
+        ('mult', do_multiply),
+        ('range', do_range),
+        ('str', do_str),
     ]
 
     return {name: bot_builder(name=name, compute_via_python=do_it) for

@@ -17,7 +17,7 @@ class BuiltinBot:
 
 class IfBot:
     def receive(self, send_calculation, callback, program):
-        assert program[0] == 'IF'
+        assert program[0] == 'if'
 
         def send_calc(cb, program):
             # This can be send_calculation when we introduce RAW
@@ -68,7 +68,7 @@ for source, target in COMMANDS:
     name = source.split()[0]
     BOTS[name] = TranslateBot(template_source=source, template_target=target)
 
-BOTS['IF'] = IfBot()
-BOTS['APPLY'] = ApplyBot()
-BOTS['DATA'] = DataBot()
+BOTS['if'] = IfBot()
+BOTS['apply'] = ApplyBot()
+BOTS['data'] = DataBot()
 

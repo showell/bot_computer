@@ -6,14 +6,14 @@ def translate(template_source, template_target, args):
     dct = {source_params[i]: args[i] for i in range(len(args))}
     def _translate(schema):
         if isinstance(schema, list):
-            if schema[0] == 'DATA':
+            if schema[0] == 'data':
                 return schema[:]
             else:
                 return [_translate(item) for item in schema]
         elif isinstance(schema, dict):
             assert len(schema.keys()) == 1
             if schema.keys()[0] == 'value':
-                return ["DATA", dct[schema['value']]]
+                return ["data", dct[schema['value']]]
             else:
                 raise Exception('unknown type of substitution')
         else:
