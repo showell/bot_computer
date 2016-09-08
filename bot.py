@@ -40,6 +40,10 @@ class ApplyBot:
             send_calculation(callback, new_program)
         Calculation(action_program, send_calculation).compute(my_callback)
 
+class DataBot:
+    def receive(self, send_calculation, callback, program):
+        callback(program[1])
+
 class TranslateBot:
     def __init__(self, template_source, template_target):
         self.template_source = template_source
@@ -66,4 +70,5 @@ for source, target in COMMANDS:
 
 BOTS['IF'] = IfBot()
 BOTS['APPLY'] = ApplyBot()
+BOTS['DATA'] = DataBot()
 
