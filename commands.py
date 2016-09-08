@@ -8,29 +8,29 @@ COMMANDS = [
     ('TAG tag val',
         [
             "ADD",
-            [None, "<"],
+            ["DATA", "<"],
             {"value": "tag"},
-            [None, ">"],
+            ["DATA", ">"],
             ["STR", {"value": "val"}],
-            [None, "</"],
+            ["DATA", "</"],
             {"value": "tag"},
-            [None, ">"]
+            ["DATA", ">"]
         ]),
 
     ('IS_ZERO x',
-        ["EQ", {"value": "x"}, [None, 0]]),
+        ["EQ", {"value": "x"}, ["DATA", 0]]),
 
     ('INCR x',
-        ["ADD", {"value": "x"}, [None, 1]]),
+        ["ADD", {"value": "x"}, ["DATA", 1]]),
 
     ('DECR x',
-        ["ADD", {"value": "x"}, [None, -1]]),
+        ["ADD", {"value": "x"}, ["DATA", -1]]),
 
     ('FACTORIAL x',
         [
             "IF",
             ["IS_ZERO", {"value": "x"}],
-            [None, 1],
+            ["DATA", 1],
             [
                 "MULT",
                 {"value": "x"},
@@ -51,7 +51,7 @@ COMMANDS = [
         [
             "IF",
             ["EQ", {"value": "index"}, ["LEN", {"value": "lst"}]],
-            [None, ""],
+            ["DATA", ""],
             [
                 "ADD",
                 ["DEREF", {"value": "index"}, {"value": "lst"}],
@@ -64,23 +64,23 @@ COMMANDS = [
         ]),
 
     ('CONCAT lst',
-        ["CONCAT_SLICE", [None, 0], {"value": "lst"}]),
+        ["CONCAT_SLICE", ["DATA", 0], {"value": "lst"}]),
 
     ('TR elems',
         [
             "TAG",
-            [None, "tr"],
+            ["DATA", "tr"],
             ["CONCAT", {"value": "elems"}]
         ]),
 
     ('TD val',
-        ["TAG", [None, "td"], {"value": "val"}]),
+        ["TAG", ["DATA", "td"], {"value": "val"}]),
 
     ('MAP_SLICE lst index func',
         [
             "IF",
             ["EQ", {"value": "index"}, ["LEN", {"value": "lst"}]],
-            [None, []],
+            ["DATA", []],
             [
                 "ADD",
                 [
@@ -103,7 +103,7 @@ COMMANDS = [
         ]),
 
     ('MAP lst func',
-        ["MAP_SLICE", {"value": "lst"}, [None, 0], {"value": "func"}]),
+        ["MAP_SLICE", {"value": "lst"}, ["DATA", 0], {"value": "func"}]),
 
     ('MATH_TR num',
         [
@@ -111,7 +111,7 @@ COMMANDS = [
             [
                 "MAP",
                 ["MATH_ROW", {"value": "num"}],
-                [None, "TD"]
+                ["DATA", "TD"]
             ]
         ]),
 
@@ -119,24 +119,24 @@ COMMANDS = [
         [
             "MAP",
             {"value": "lst"},
-            [None, "MATH_TR"]
+            ["DATA", "MATH_TR"]
         ]),
 
     ('NL str',
-        ["ADD", {"value": "str"}, [None, "\n"]]),
+        ["ADD", {"value": "str"}, ["DATA", "\n"]]),
 
     ('TABLE header_row elems',
         [
             "ADD",
-            [None, "<table border=1>"],
-            [None, "\n"],
+            ["DATA", "<table border=1>"],
+            ["DATA", "\n"],
             {"value": "header_row"},
-            [None, "\n"],
+            ["DATA", "\n"],
             [
                 "CONCAT",
-                ["MAP", {"value": "elems"}, [None, "NL"]]
+                ["MAP", {"value": "elems"}, ["DATA", "NL"]]
             ],
-            [None, "</table>"]
+            ["DATA", "</table>"]
         ]),
 
     ('MATH_TABLE number_lst',
@@ -146,8 +146,8 @@ COMMANDS = [
                 "TR",
                 [
                     "MAP",
-                    [None, ["n", "double", "square", "factorial"]],
-                    [None, "TD"]
+                    ["DATA", ["n", "double", "square", "factorial"]],
+                    ["DATA", "TD"]
                 ]
             ],
             ["MATH_TABLE_GUTS", {"value": "number_lst"}]
