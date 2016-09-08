@@ -33,16 +33,13 @@ def run():
         '["TD", [null, "hello"]]',
         '["CONCAT", [null, ["a", "b", "c"]]]',
         '["TR", ["LIST", ["TD", [null, "a"]], [null, "<td>b</td>"]]]',
-        '["APPLY", ["ADD", [null, 1], [null, 2]]]',
+        '["APPLY", [[null, "ADD"], [null, 1], [null, 2]]]',
         '["MAP", [null, [1, 2, 3]], [null, "DOUBLE"]]',
         '["MATH_TR", [null, 7]]',
         '["MATH_TABLE_GUTS", ["RANGE", [null, 5], [null, 12]]]',
         '["TABLE", [null, "header_row"], [null, ["foo", "bar"]]]',
     ]
 
-    ignore = [
-        '(MATH_TABLE 7)',
-    ]
     for message in messages:
         vm = VirtualMachine(BOTS)
 

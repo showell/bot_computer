@@ -1,3 +1,5 @@
+from parser import parse
+
 class VirtualMachine:
     def __init__(self, bots, verbose=False):
         self.seq = 0
@@ -21,10 +23,11 @@ class VirtualMachine:
         if self.verbose:
             print "\n\n--"
 
-        self.send_calculation(callback, 'Dispatch', message)
+        program = parse(message)
+        self.send_calculation(callback, program)
         self.event_loop()
 
-    def _dispatch_request_to_bot(self, seq, bot, message, callback):
+    def _dispatch_request_to_bot(self, seq, bot, program, callback):
         '''
         We need a bot to do work for us, and we have a sequence
         number and a message, plus some callback that we need
@@ -33,13 +36,13 @@ class VirtualMachine:
         another bot that requested the calculation.  The sequence
         number will allow us to match replies to requests.
         '''
-        self.requests[seq] = message
+        self.requests[seq] = program
         self.callbacks[seq] = callback
         def make_callback(seq):
             def my_callback(answer):
                 self.replies.append((seq, answer))
             return my_callback
-        bot.receive(self.send_calculation, make_callback(seq), message)
+        bot.receive(self.send_calculation, make_callback(seq), program)
 
     def _handle_reply_from_bot(self, seq, answer):
         '''
@@ -66,12 +69,13 @@ class VirtualMachine:
                 seq, bot, message, callback = self.messages.pop(0)
                 self._dispatch_request_to_bot(seq, bot, message, callback)
 
-    def send_calculation(self, callback, action, message):
+    def send_calculation(self, callback, program):
+        action = program[0]
         try:
             bot = self.bots[action]
         except:
-            raise Exception('Unknown action %s in %s' % (action, message))
-        self.messages.append((self.seq, bot, message, callback))
+            raise Exception('Unknown action %s in %s' % (action, program))
+        self.messages.append((self.seq, bot, program, callback))
         self.seq += 1
 
 

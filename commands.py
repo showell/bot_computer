@@ -88,7 +88,7 @@ COMMANDS = [
                     [
                         "APPLY",
                         [
-                            {"name": "func"},
+                            {"value": "func"},
                             ["DEREF", {"value": "index"}, {"value": "lst"}]
                         ]
                     ]

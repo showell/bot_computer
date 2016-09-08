@@ -12,9 +12,7 @@ def translate(template_source, template_target, args):
                 return [_translate(item) for item in schema]
         elif isinstance(schema, dict):
             assert len(schema.keys()) == 1
-            if schema.keys()[0] == 'name':
-                return dct[schema['name']]
-            elif schema.keys()[0] == 'value':
+            if schema.keys()[0] == 'value':
                 return [None, dct[schema['value']]]
             else:
                 raise Exception('unknown type of substitution')
@@ -22,6 +20,6 @@ def translate(template_source, template_target, args):
             return schema
 
     target_data = _translate(template_target)
-    return json.dumps(target_data)
+    return target_data
 
 

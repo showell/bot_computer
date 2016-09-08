@@ -9,30 +9,18 @@ a calculation to another actor; it gets passed in a
 send_calculation message.
 '''
 
-def make_arg(token, send_calculation):
-    if token.kind == 'literal':
-        return Literal(token)
-    else:
-        return Calculation(token, send_calculation)
-
-class Literal:
-    def __init__(self, token):
-        self.val = token.val
-        self.action = None
-
-    def compute(self, callback):
-        callback(self.val)
-
 class Calculation:
-    def __init__(self, token, send_calculation):
-        self.token = token
-        self.action = token.action
-        self.message = str(token)
-        self.args = [make_arg(t, send_calculation) for t in token.args]
+    def __init__(self, program, send_calculation):
+        self.program = program
+        self.args = program[1:]
         self.send_calculation = send_calculation
 
     def compute(self, callback):
-        self.send_calculation(callback, self.action, self.message)
+        if self.program[0] is None:
+            # This should go away with RAW
+            callback(self.args[0])
+        else:
+            self.send_calculation(callback, self.program)
 
     def compute_args(self, callback):
         computed_args = []
@@ -46,7 +34,8 @@ class Calculation:
                 callback(computed_args)
             else:
                 arg = self.args[len(computed_args)]
-                arg.compute(on_computed_arg)
+                arg_calculation = Calculation(arg, self.send_calculation)
+                arg_calculation.compute(on_computed_arg)
 
         compute_one()
 
