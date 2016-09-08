@@ -19,7 +19,7 @@ class BuiltinBot:
             print calculation.action
             raise Exception('Wrong bot dispatched.')
         def on_callback(computed_args):
-            callback(self.compute_via_python(computed_args))
+            callback(self.compute_via_python(*computed_args))
         calculation.compute_args(on_callback)
 
 class DispatchBot:

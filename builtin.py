@@ -6,40 +6,40 @@ Simple built-in bots don't have introspection capability, and
 they only now how to manipulate JSON; they don't call other bots.
 '''
 
-def do_add(args):
+def do_add(*args):
     assert len(args) >= 1
     sum = args[0]
     for arg in args[1:]:
         sum += arg
     return sum
 
-def do_deref(args):
-    return args[1][args[0]]
+def do_deref(index, data):
+    return data[index]
 
-def do_eq(args):
-    if str(args[0]) == str(args[1]):
+def do_eq(a, b):
+    if a == b:
         return 1
     else:
         return 0
 
-def do_len(args):
-    return len(args[0])
+def do_len(val):
+    return len(val)
 
-def do_list(args):
-    return args
+def do_list(*items):
+    return list(items)
 
-def do_multiply(args):
+def do_multiply(*args):
     assert len(args) >= 1
     product = args[0]
     for arg in args[1:]:
         product *= arg
     return product
 
-def do_range(args):
-    return range(args[0], args[1])
+def do_range(lo, hi):
+    return range(lo, hi)
 
-def do_str(args):
-    return str(args[0])
+def do_str(val):
+    return str(val)
 
 def make_builtin_bots(bot_builder):
     tups = [
