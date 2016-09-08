@@ -5,15 +5,15 @@ COMMANDS = [
     ('square x',
         ["mult", {"value": "x"}, {"value": "x"}]),
 
-    ('tag tag val',
+    ('tag tag_name val',
         [
             "add",
             ["data", "<"],
-            {"value": "tag"},
+            {"value": "tag_name"},
             ["data", ">"],
             ["str", {"value": "val"}],
             ["data", "</"],
-            {"value": "tag"},
+            {"value": "tag_name"},
             ["data", ">"]
         ]),
 
