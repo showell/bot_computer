@@ -1,11 +1,15 @@
 '''
-This file configures the simpler built-in bots, but it doesn't
-implement their full behavior.
-
-Simple built-in bots don't have introspection capability, and
-they only now how to manipulate JSON; they don't call other bots.
+This file implements primitive functions that only act
+on data and don't interact with other functions.
 '''
 
+BUILTINS = []
+
+def public(f):
+    BUILTINS.append(f)
+    return f
+
+@public
 def do_add(*args):
     assert len(args) >= 1
     sum = args[0]
@@ -13,21 +17,26 @@ def do_add(*args):
         sum += arg
     return sum
 
+@public
 def do_deref(index, data):
     return data[index]
 
+@public
 def do_eq(a, b):
     if a == b:
         return 1
     else:
         return 0
 
+@public
 def do_len(val):
     return len(val)
 
+@public
 def do_list(*items):
     return list(items)
 
+@public
 def do_multiply(*args):
     assert len(args) >= 1
     product = args[0]
@@ -35,23 +44,11 @@ def do_multiply(*args):
         product *= arg
     return product
 
+@public
 def do_range(lo, hi):
     return range(lo, hi)
 
+@public
 def do_str(val):
     return str(val)
 
-def make_builtin_bots(bot_builder):
-    tups = [
-        ('add', do_add),
-        ('deref', do_deref),
-        ('eq', do_eq),
-        ('len', do_len),
-        ('list', do_list),
-        ('mult', do_multiply),
-        ('range', do_range),
-        ('str', do_str),
-    ]
-
-    return {name: bot_builder(name=name, compute_via_python=do_it) for
-        name, do_it in tups}

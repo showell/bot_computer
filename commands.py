@@ -3,7 +3,7 @@ COMMANDS = [
         ["add", {"value": "x"}, {"value": "x"}]),
 
     ('square x',
-        ["mult", {"value": "x"}, {"value": "x"}]),
+        ["multiply", {"value": "x"}, {"value": "x"}]),
 
     ('tag tag_name val',
         [
@@ -32,7 +32,7 @@ COMMANDS = [
             ["is_zero", {"value": "x"}],
             ["data", 1],
             [
-                "mult",
+                "multiply",
                 {"value": "x"},
                 ["factorial", ["decr", {"value": "x"}]]
             ]

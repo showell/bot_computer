@@ -1,5 +1,5 @@
 import json
-from builtin import make_builtin_bots
+from builtin import BUILTINS
 from commands import COMMANDS
 from calculate import Calculation
 from translate import translate
@@ -62,7 +62,12 @@ class TranslateBot:
             args=computed_args)
         send_calculation(callback, new_program)
 
-BOTS = make_builtin_bots(BuiltinBot)
+BOTS = {}
+for f in BUILTINS:
+    name = f.__name__
+    if name.startswith('do_'):
+        name = name[3:]
+    BOTS[name] = BuiltinBot(name=name, compute_via_python=f)
 
 for source, target in COMMANDS:
     name = source.split()[0]

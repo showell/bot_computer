@@ -78,7 +78,7 @@ def translate_to_python(commands):
             code = ' + \n'.join(args)
             return '(' + code + ')'
 
-        if func_name == 'mult':
+        if func_name == 'multiply':
             code = ' * \n'.join(args)
             return '(' + code + ')'
 
