@@ -76,35 +76,6 @@ COMMANDS = [
     ('td val',
         ["tag", ["data", "td"], {"value": "val"}]),
 
-    ('map_slice lst index func',
-        [
-            "if",
-            ["eq", {"value": "index"}, ["len", {"value": "lst"}]],
-            ["data", []],
-            [
-                "add",
-                [
-                    "list",
-                    [
-                        "apply",
-                        [
-                            {"value": "func"},
-                            ["deref", {"value": "index"}, {"value": "lst"}]
-                        ]
-                    ]
-                ],
-                [
-                    "map_slice",
-                    {"value": "lst"},
-                    ["incr", {"value": "index"}],
-                    {"value": "func"}
-                ]
-            ]
-        ]),
-
-    ('map lst func',
-        ["map_slice", {"value": "lst"}, ["data", 0], {"value": "func"}]),
-
     ('math_tr num',
         [
             "tr",

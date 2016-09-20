@@ -40,6 +40,34 @@ class DataBot:
     def receive(self, send_calculation, callback, program):
         callback(program[1])
 
+class MapBot:
+    def receive(self, send_calculation, callback, program):
+        action_program = program[2]
+        list_program = program[1]
+
+        def on_action(action):
+            def on_list(my_list):
+                result = []
+
+                def on_mapped_item(mapped_item):
+                    result.append(mapped_item)
+                    compute_one()
+
+                def compute_one():
+                    if len(result) == len(my_list):
+                        callback(result)
+                    else:
+                        item = my_list[len(result)]
+                        program = [action, ['data', item]]
+                        send_calculation(on_mapped_item, program)
+
+                compute_one()
+
+            send_calculation(on_list, list_program)
+
+        send_calculation(on_action, action_program)
+
+
 class TranslateBot:
     def __init__(self, template_source, template_target):
         self.template_source = template_source
@@ -69,7 +97,8 @@ for source, target in COMMANDS:
     name = source.split()[0]
     BOTS[name] = TranslateBot(template_source=source, template_target=target)
 
-BOTS['if'] = IfBot()
 BOTS['apply'] = ApplyBot()
 BOTS['data'] = DataBot()
+BOTS['if'] = IfBot()
+BOTS['map'] = MapBot()
 
