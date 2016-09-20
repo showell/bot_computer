@@ -67,6 +67,13 @@ def translate_to_python(commands):
                 indent(args[2], 4))
             return code
 
+        if func_name == 'map':
+            code = '[\n%s\n%s\n%s]' % (
+                indent('%s(x)' % eval(args[1]), 4),
+                indent('for x in ', 4),
+                indent(args[0], 4))
+            return code
+
         if func_name == 'eq':
             return '%s == %s' % (args[0], args[1])
 
