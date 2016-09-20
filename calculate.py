@@ -15,13 +15,6 @@ class Calculation:
         self.args = program[1:]
         self.send_calculation = send_calculation
 
-    def compute(self, callback):
-        if self.program[0] is None:
-            # This should go away with RAW
-            callback(self.args[0])
-        else:
-            self.send_calculation(callback, self.program)
-
     def compute_args(self, callback):
         computed_args = []
 
@@ -34,8 +27,7 @@ class Calculation:
                 callback(computed_args)
             else:
                 arg = self.args[len(computed_args)]
-                arg_calculation = Calculation(arg, self.send_calculation)
-                arg_calculation.compute(on_computed_arg)
+                self.send_calculation(on_computed_arg, arg)
 
         compute_one()
 
