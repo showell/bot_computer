@@ -31,7 +31,6 @@ def run():
         ["td", ["data", "hello"]],
         ["concat", ["data", ["a", "b", "c"]]],
         ["tr", ["list", ["td", ["data", "a"]], ["data", "<td>b</td>"]]],
-        ["apply", [["data", "add"], ["data", 1], ["data", 2]]],
         ["map", ["data", [1, 2, 3]], ["data", "double"]],
         ["math_tr", ["data", 7]],
         ["math_table_guts", ["range", ["data", 5], ["data", 12]]],

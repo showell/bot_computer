@@ -27,15 +27,6 @@ class IfBot:
                 send_calculation(callback, args[2])
         send_calculation(my_callback, args[0])
 
-class ApplyBot:
-    def receive(self, send_calculation, callback, program):
-        action_program = program[1][0]
-        args = program[1][1:]
-        def my_callback(action):
-            new_program = [action] + args
-            send_calculation(callback, new_program)
-        send_calculation(my_callback, action_program)
-
 class DataBot:
     def receive(self, send_calculation, callback, program):
         callback(program[1])
@@ -97,7 +88,6 @@ for source, target in COMMANDS:
     name = source.split()[0]
     BOTS[name] = TranslateBot(template_source=source, template_target=target)
 
-BOTS['apply'] = ApplyBot()
 BOTS['data'] = DataBot()
 BOTS['if'] = IfBot()
 BOTS['map'] = MapBot()

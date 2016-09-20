@@ -42,11 +42,6 @@ def translate_to_python(commands):
         if type(func_name) is dict:
             func_name = func_name['value']
 
-        if func_name == 'apply':
-            func_name = 'globals()[%s]' % translate_expression(expr[1][0])
-            args = expr[1][1:]
-            return translate_expression([func_name] + args)
-
         if func_name == 'data':
             val = expr[1]
             if type(val) is dict:
