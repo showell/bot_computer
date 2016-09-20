@@ -34,7 +34,7 @@ class ApplyBot:
         def my_callback(action):
             new_program = [action] + args
             send_calculation(callback, new_program)
-        Calculation(action_program, send_calculation).compute(my_callback)
+        send_calculation(my_callback, action_program)
 
 class DataBot:
     def receive(self, send_calculation, callback, program):
