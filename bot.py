@@ -19,17 +19,13 @@ class IfBot:
     def receive(self, send_calculation, callback, program):
         assert program[0] == 'if'
 
-        def send_calc(cb, program):
-            # This can be send_calculation when we introduce RAW
-            Calculation(program, send_calculation).compute(cb)
-
         args = program[1:]
         def my_callback(answer):
             if answer:
-                send_calc(callback, args[1])
+                send_calculation(callback, args[1])
             else:
-                send_calc(callback, args[2])
-        send_calc(my_callback, args[0])
+                send_calculation(callback, args[2])
+        send_calculation(my_callback, args[0])
 
 class ApplyBot:
     def receive(self, send_calculation, callback, program):
